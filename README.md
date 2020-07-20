@@ -23,15 +23,15 @@ Date:         2020-06-15
 
 #Installation
 Upload files to your Webserver and follow this instructions:
-1.) At first you have to edit config.inc.php in includes directory
+- 1.) At first you have to edit config.inc.php in includes directory
 	(use base64.php to encode your MySQL-Password for config.inc.php)
 	(Don't forget to delete base64.php after using)
-2.) Import portal.sql to MySQL-Database
-3.) Register at the Webportal and start posting what you want
-4.) Edit text in home.module.php in modules directory
+- 2.) Import portal.sql to MySQL-Database
+- 3.) Register at the Webportal and start posting what you want
+- 4.) Edit text in home.module.php in modules directory
 
-+.) You can use blank.module.php to develop your own modules
-+.) index.html does not have to be used if you don't like to
+- +.) You can use blank.module.php to develop your own modules
+- +.) index.html does not have to be used if you don't like to
     (if you don't like to use index.html, delete it on your webserver)
 
 You can visit an example of this webportal at https://webportal.de.cool
