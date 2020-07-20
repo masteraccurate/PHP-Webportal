@@ -1,0 +1,23 @@
+Version 1.0 Final
+
+
+Version 1.0 Final RC2
+- Fehler behoben
+- Board-Module eingefügt
+- Such-Funktion erweitert
+
+Version 1.0 Final Release
+- Fehler behoben
+- ajax-Chat integriert
+- favicon.ico integriert
+
+Version 1.1 Alpha
+- Absoluter Path in includes
+- Escaped $_GET und $_POST Variablen
+- SVG Logo-Banner mit Text änderbar in config.inc.php
+- Modul-Titel im seitentitel rechts neben des config-titel für besseres Bookmarking
+- Moving-Circles SVG inportiert in login.module.php für besseres Design aussehen
+
+Version 1.1 Beta
+- Wechsel HTML 4.01 zu HTML 5
+- Bugs gefix

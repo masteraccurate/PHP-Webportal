@@ -19,19 +19,19 @@
 ####################################################
 
 Installation
-1.) At first you have to edit config.inc.php in includes directory
-	(use base64.php to encode your MySQL-Password for config.inc.php)
-2.) Import portal.sql to MySQL-Database
-3.) Upload all files to your PHP/MySQL webspace
-4.) Register at the Webportal and start posting what you want
-5.) Edit text in home.module.php in modules directory
+1.) Als erstes muss du die config.inc.php im includes Ordner editieren
+	(benutze base64.php zum encoden des passworts für die config.inc.php)
+2.) Importiere portal.sql in deine MySQL-Datenbank
+3.) Lade alle Dateien auf dein PHP/MySQL Webspace
+4.) Registriere dich im Webportal und poste was du willst
+5.) Editiere den Text in home.module.php im modules Ordner
 
-*.) You can use blank.module.php to develop your own modules
-**.) The Search Function is now updated
-***.) Board is now integrated
-****.) Chat and favicon.ico are now integrated
-#.) index.html does not have to be used if you don't like to
+*.) Du kannst blank.module.php nutzen um deine eigenen module zu programmieren
+**.) Die Suchfunktion ist jetzt erweitert
+***.) Board ist integriert
+****.) Chat und favicon.ico sind jetzt integriert
+#.) Die index.html muss nicht genutzt werden wenn nicht erwünscht
 
-You can visit an example of this webportal at https://webportal.de.cool
-To delete or edit postings you need to use phpMyAdmin or similar
-Have fun trying!
+Du kannst ein Exemplar von Webportal besuchen unter https://webportal.de.cool
+Um Einträge zu löschen oder editieren brauchst du phpMyAdmin oder ähnliches
+Viel Spass beim ausprobieren!
