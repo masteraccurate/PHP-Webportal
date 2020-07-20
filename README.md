@@ -17,6 +17,9 @@ Date:         2020-06-15
 - Userlist-Module
 - Messenger-Module
 - Chat-Module
+- Namegenerator
+- Password-Generator
+- Build-In SVG-Banner
 
 #Installation
 Upload files to your Webserver and follow this instructions:
