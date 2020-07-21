@@ -31,8 +31,6 @@ Upload files to your Webserver and follow this instructions:
 - 4.) Editiere den Text in home.module.php im modules Ordner
 
 - +.) Du kannst blank.module.php nutzen um deine eigenen module zu programmieren
-- +.) Die index.html muss nicht genutzt werden wenn nicht erwünscht
-    (wenn du die index.html nicht nutzen willst, lösche diese vom webserver)
 
 Du kannst ein Exemplar von Webportal besuchen unter https://webportal.de.cool
 Um Einträge zu löschen oder editieren brauchst du phpMyAdmin oder ähnliches
