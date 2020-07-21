@@ -1,9 +1,9 @@
-Author:       MasterAccurate
-E-Mail:       masteraccurate@yahoo.com
-Website:      https://masteraccurate.lima-city.de
-Project-Name: PHP-Webportal
-Project-Site: https://webportal.de.cool
-Date:         2020-06-15
+- Author:       MasterAccurate
+- E-Mail:       masteraccurate@yahoo.com
+- Website:      https://masteraccurate.lima-city.de
+- Project-Name: PHP-Webportal
+- Project-Site: https://webportal.de.cool
+- Date:         2020-06-15
 
 # PHP-Webportal Features:
 - Guestbook-Module
