@@ -27,3 +27,5 @@ Version 1.1 Final
 - Config-Helperfunction added and integrated in modules
 - Classes labeled as private and public
 - Bugs gefixt
+- 
+- Development Status (this version is still developed)
