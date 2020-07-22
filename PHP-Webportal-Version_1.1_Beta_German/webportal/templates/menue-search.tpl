@@ -14,6 +14,7 @@ div.menu2 {
 		$(".hilde2").hide();
 		$(".menu2").click(function () {
 			$(".hilde2").show(1000);
+			$(".hilde1").hide(1000);
 		});
 		$(".menu2").dblclick(function () {
 			$(".hilde2").hide(1000);
@@ -27,7 +28,7 @@ div.menu2 {
 <div class="menu2">
  <p>Such Men&uuml;</p>
  <div class="hilde2">
-<FORM ACTION="index.php?id=search" METHOD="GET"><br><INPUT TYPE="hidden" NAME="id" VALUE="search"><INPUT TYPE="TEXT" NAME="search" SIZE="10" MAXLENGTH="256" PLACEHOLDER="Suchen..."><br><br><INPUT TYPE="Submit" VALUE="Suchen"><br></FORM>
+<FORM ACTION="index.php?id=search" METHOD="GET"><br><INPUT TYPE="hidden" NAME="id" VALUE="search"><INPUT TYPE="TEXT" NAME="search" SIZE="10" MAXLENGTH="256" PLACEHOLDER="Suchen..."><br><br><INPUT TYPE="Submit" VALUE="Suchen"><br><br></FORM>
  </div>
 </div>
   </td>

@@ -14,6 +14,7 @@ div.menu2 {
 		$(".hilde2").hide();
 		$(".menu2").click(function () {
 			$(".hilde2").show(1000);
+			$(".hilde1").hide(1000);
 		});
 		$(".menu2").dblclick(function () {
 			$(".hilde2").hide(1000);
