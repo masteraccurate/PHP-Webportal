@@ -1,40 +1,20 @@
 <?php
-################################################
-# Author:       MasterAccurate                 #
-# E-Mail:       masteraccurate@yahoo.com       #
-# Website:      http://webportal.de.cool       #
-################################################
-# Project-Name: PHP-Webportal                  #
-# Filename:     members.module.php             #
-# Date:         2020-05-18                     #
-################################################
-#                  Copyright                   #
-# Copyright refers to the exclusive right to   #
-# a piece of work such as literature, music,   #
-# artwork and computer software including the  #
-# underlying algorithms, source code and the   #
-# program's appearance. Rights covered include #
-# copying, distributing and creating           #
-# derivative works. Most software is           #
-# distributed with a license or copyright      #
-# notice that explains how it can be used.     #
-################################################
 class members {
 	function title() {
 		return "Benutzerliste";
 	}
 	function main() {
-		global $config;
+		$main = new main();
 		$content = "";
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == "1") {
-			$dbpass = base64_decode($config['dbpass']);
-			$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+			$dbpass = base64_decode($main->config('dbpass'));
+			$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			$limit = "0";
 			$page = "";
 			if(empty($_GET['page'])) {
 				$page = "1";
 			} else {
-				$page = htmlspecialchars($_GET['page']);
+				$page = htmlspecialchars($_GET['page'], ENT_QUOTES);
 			}
 			if($page == "1") {
 				$limit = "0";
@@ -46,17 +26,14 @@ class members {
 			}
 			$result = mysqli_query($connect, "SELECT * FROM user ORDER by id LIMIT ".$limit.",5");
 			if(!$result){
-				$main = new main();
 				$content = $main->error("3","ERROR CONNECTING");
 			}
 			while($row = mysqli_fetch_array($result, MYSQLI_BOTH)){
 				$content_var = "ID: ".$row['id']."<br>\nBenutzername: ".$row['user']."<br>\nHomepage: <a href=\"".$row['homepage']."\" target=\"_BLANK\">".$row['homepage']."</a><br>\n<br><hr>\n";
 				$content .= $content_var;
 			}
-
 			$result = mysqli_query($connect, "SELECT * FROM user ORDER by ID");
 			if(!$result){
-				$main = new main();
 				$content = $main->error("3","ERROR CONNECTING");
 			}
 			$sites = "";
@@ -72,6 +49,7 @@ class members {
 			$i = "";
 			for($i=1;$i<=$site_sum; ++$i) {
 				$sites .= "<a href=\"index.php?id=members&amp;page=".$i."\">".$i."</a>&nbsp;";
+
 			}
 			$content = str_replace("\n","",$content);
 			$content = str_replace("\r","",$content);

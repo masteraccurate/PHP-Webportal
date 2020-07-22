@@ -1,24 +1,4 @@
 <?php
-################################################
-# Author:       MasterAccurate                 #
-# E-Mail:       masteraccurate@yahoo.com       #
-# Website:      http://webportal.de.cool       #
-################################################
-# Project-Name: PHP-Webportal                  #
-# Filename:     login.module.php               #
-# Date:         2020-05-18                     #
-################################################
-#                  Copyright                   #
-# Copyright refers to the exclusive right to   #
-# a piece of work such as literature, music,   #
-# artwork and computer software including the  #
-# underlying algorithms, source code and the   #
-# program's appearance. Rights covered include #
-# copying, distributing and creating           #
-# derivative works. Most software is           #
-# distributed with a license or copyright      #
-# notice that explains how it can be used.     #
-################################################
 class login {
 	function title() {
 		if(($_GET['action'] == "login") || ($_GET['action'] == "logout")) {
@@ -36,13 +16,13 @@ class login {
 		$template = new template();
 		$moving_circles = $template->load("moving-circles.tpl");
 		if(isset($_GET['action']) && $_GET['action'] != "" && $_GET['action'] != "NULL" && $_GET['action'] != "0" && $_GET['action'] != "false") {
-			$action = htmlspecialchars($_GET['action']);
+			$action = htmlspecialchars($_GET['action'], ENT_QUOTES);
 		} else {
 			$action = "register_form";
 		}
 		if($action == "login") {
-			$user = htmlspecialchars($_POST['user']);
-			$pass = htmlspecialchars($_POST['pass']);
+			$user = htmlspecialchars($_POST['user'], ENT_QUOTES);
+			$pass = htmlspecialchars($_POST['pass'], ENT_QUOTES);
 			if(($user != "") && ($pass != "")) {
 				$main = new main();
 				$login = $main->login($user,$pass);
@@ -57,9 +37,9 @@ class login {
 			$content = "Du bist jetzt ausgeloggt!\n";
 			$content = $content."<br>\n".$moving_circles;
 		} elseif($action == "register") {
-			$user = htmlspecialchars($_POST['user']);
-			$email = htmlspecialchars($_POST['email']);
-			$pass = htmlspecialchars($_POST['pass']);
+			$user = htmlspecialchars($_POST['user'], ENT_QUOTES);
+			$email = htmlspecialchars($_POST['email'], ENT_QUOTES);
+			$pass = htmlspecialchars($_POST['pass'], ENT_QUOTES);
 			if(($user != "") && ($email != "") && ($pass != "")) {
 				$main = new main();
 				$content = $main->register($user,$email,$pass);
@@ -69,16 +49,16 @@ class login {
 			$content = $content."<br>\n".$moving_circles;
 		} elseif($action == "register_form") {
 			if(isset($_GET['anr']) && ($_GET['anr'] == "")) {
-				$actnr = htmlspecialchars($_GET['anr']);
+				$actnr = htmlspecialchars($_GET['anr'], ENT_QUOTES);
 			} else {
 				$actnr = "";
 			}
 //			$template = new template();
 			$content = $template->load("register_form.tpl");
 		} elseif($action == "activate") {
-			$user = htmlspecialchars($_POST['user']);
-			$pass = htmlspecialchars($_POST['pass']);
-			$active = htmlspecialchars($_POST['active']);
+			$user = htmlspecialchars($_POST['user'], ENT_QUOTES);
+			$pass = htmlspecialchars($_POST['pass'], ENT_QUOTES);
+			$active = htmlspecialchars($_POST['active'], ENT_QUOTES);
 			if(($user != "") && ($pass != "") && ($active != "")) {
 				$main = new main();
 				$content = $main->activation($user,$pass,$active);
@@ -88,20 +68,20 @@ class login {
 			$content = $content."<br>\n".$moving_circles;
 		} elseif($action == "activate_form") {
 			if(isset($_GET['anr']) && ($_GET['anr'] != "")) {
-				$anr = htmlspecialchars($_GET['anr']);
+				$anr = htmlspecialchars($_GET['anr'], ENT_QUOTES);
 			} else {
 				$anr = "";
 			}
-//			$template = new template();
+			$template = new template();
 			$content = $template->load("activate_form.tpl");
 			$content = str_replace(">>anr<<",$anr,$content);
 		} elseif($action == "react_form") {
 			$template = new template();
 			$content = $template->load("react_form.tpl");
 		} elseif($action == "react") {
-			$user = htmlspecialchars($_POST['user']);
-			$pass = htmlspecialchars($_POST['pass']);
-			$email = htmlspecialchars($_POST['email']);
+			$user = htmlspecialchars($_POST['user'], ENT_QUOTES);
+			$pass = htmlspecialchars($_POST['pass'], ENT_QUOTES);
+			$email = htmlspecialchars($_POST['email'], ENT_QUOTES);
 			if(($user != "") && ($pass != "") && ($email != "")) {
 				$main = new main();
 				$login = $main->react($user,$pass,$email);
@@ -116,8 +96,8 @@ class login {
 			$template = new template();
 			$content = $template->load("lostpass_form.tpl");
 		} elseif($action == "lostpass") {
-			$user = htmlspecialchars($_POST['user']);
-			$email = htmlspecialchars($_POST['email']);
+			$user = htmlspecialchars($_POST['user'], ENT_QUOTES);
+			$email = htmlspecialchars($_POST['email'], ENT_QUOTES);
 			if(($user != "") && ($email != "")) {
 				$main = new main();
 				$login = $main->lostpass($user,$email);

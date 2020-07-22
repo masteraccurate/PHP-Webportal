@@ -26,7 +26,7 @@ $includes_dir = "includes";
 
 // Do not edit below if don't know what to do!
 if(isset($_GET['id']) && $_GET['id'] != "NULL" && $_GET['id'] != "" && $_GET['id'] != "false" && $_GET['id'] != "0") {
-	$id = htmlspecialchars($_GET['id']);
+	$id = htmlspecialchars($_GET['id'], ENT_QUOTES);
 } else {
 	$id = $std_id;
 }
@@ -44,9 +44,13 @@ class main {
 		}
 		return $error;
 	}
+	function config($config_var) {
+		$dir_var = dirname(__FILE__);
+		include $dir_var."/config.inc.php";
+		return $config[$config_var];
+	}
 	function includes() {
-		global $config,$includes_dir;
-		// Set includes directory
+		global $includes_dir;
 		$dir_var = dirname(__FILE__);
 		$idir = $includes_dir;
 			$odir = @opendir($dir_var."/".$idir);
@@ -58,10 +62,10 @@ class main {
 		closedir($odir);
 	}
 	function module() {
-		global $id,$sid,$config;
+		global $id,$sid;
 		if($id != "") {
 			$dir_var = dirname(__FILE__);
-			$dir = $config['mod_dir'];
+			$dir = $this->config('mod_dir');
 				$module = $dir_var."/".$dir."/".$id.".module.php";
 			if(file_exists($module)) {
 				include $module;
@@ -78,7 +82,7 @@ class main {
 		global $id,$config;
 		if($id != "") {
 			$dir_var = dirname(__FILE__);
-			$dir = $config['mod_dir'];
+			$dir = $this->config('mod_dir');
 				$module = $dir_var."/".$dir."/".$id.".module.php";
 			if(file_exists($module)) {
 				$var_id = new $id();
@@ -91,10 +95,9 @@ class main {
 		}
 	}
 	function login($user,$pass) {
-		global $config;
-		$dbpass = base64_decode($config['dbpass']);
-		$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
-		$pass_crypt = crypt($pass,$config['salt']);
+		$dbpass = base64_decode($this->config('dbpass'));
+		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
+		$pass_crypt = crypt($pass,$this->config('salt'));
 		$result = mysqli_query($connect,"SELECT user, pass FROM user WHERE user='$user' AND pass='$pass_crypt' AND sid=0");
 		if(mysqli_num_rows($result) > 0) {
 			$_SESSION['user'] = $user;
@@ -111,30 +114,29 @@ class main {
 		session_unset();
 	}
 	function register($user,$email,$pass) {
-		global $config;
-		$dbpass = base64_decode($config['dbpass']);
-		$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+		$dbpass = base64_decode($this->config('dbpass'));
+		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$result = mysqli_query($connect,"SELECT user FROM user WHERE user='$user'");
 		if(mysqli_num_rows($result) > 0) {
 			$msg = "Username <b>".$user."</b> is allready registred!\n";
 		} else {
 			if(isset($_POST['email'])) {
 				// Validate email
-				$email = htmlspecialchars($_POST['email']);
+				$email = htmlspecialchars($_POST['email'], ENT_QUOTES);
 				if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 					$msg = "<b>".$email."</b> is not a valid Emailaddress";
 				}
 			}
 			$post_name = htmlspecialchars($_POST['user'], ENT_QUOTES);
 			$post_email = htmlspecialchars($email, ENT_QUOTES);
-			$post_pass = crypt($_POST['pass'],$config['salt']);
+			$post_pass = crypt($_POST['pass'],$this->config('salt'));
 			$post_homepage = htmlspecialchars($_POST['homepage'], ENT_QUOTES);
 			$random_nr = rand(11111111,99999999);
 			$statement = "INSERT INTO user (id,sid,user,pass,email,homepage,admin,mode,opt1,opt2,opt3,comment,signatur) VALUES(NULL,'".$random_nr."','".$post_name."','".$post_pass."','".$post_email."','".$post_homepage."','','','','','','','')";
 			$result = mysqli_query($connect,$statement);
 			if(isset($result)) {
-				if(mail($email,"Finish registration", "Username: ".$post_name."\nActivationnumber: ".$random_nr."\n".$config['url']."index.php?id=login&action=activate_form&anr=".$random_nr."\n","From: ".$config['email']." <".$config['email'].">")) {
-					$activition = "Email with Activationnuber was send to <b>".$post_email."</b><br>\n<a href=\"".$config['url']."index.php?id=login&amp;action=activate_form\">Activation</a>\n";
+				if(mail($email,"Finish registration", "Username: ".$post_name."\nActivationnumber: ".$random_nr."\n".$this->config('url')."index.php?id=login&action=activate_form&anr=".$random_nr."\n","From: ".$this->config('email')." <".$this->config('email').">")) {
+					$activition = "Email with Activationnuber was send to <b>".$post_email."</b><br>\n<a href=\"".$this->config('url')."index.php?id=login&amp;action=activate_form\">Activation</a>\n";
 				} else {
 					$activition = "Email Error. Please contact Administrator!";
 				}
@@ -148,10 +150,9 @@ class main {
 		return $msg;
 	}
 	function activation($user,$pass,$active) {
-		global $config;
-		$dbpass = base64_decode($config['dbpass']);
-		$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
-		$crypt_pass = crypt($pass,$config['salt']);
+		$dbpass = base64_decode($this->config('dbpass'));
+		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
+		$crypt_pass = crypt($pass,$this->config('salt'));
 		$result = mysqli_query($connect,"SELECT user FROM user WHERE user='$user' AND pass='$crypt_pass' AND sid='$active'");
 		if(mysqli_num_rows($result) > 0) {
 			$post_name = htmlspecialchars($_POST['user'], ENT_QUOTES);
@@ -165,23 +166,22 @@ class main {
 				$msg = "ACTIVATION ERROR ".$post_name." ".$post_pass." ".$post_active;
 			}
 		} else {
-			$msg = "Username, Password or Activationnummber wrong!<br>\n<a href=\"".$config['url']."index.php?id=login&amp;action=activate_form\">Activation</a>\n";
+			$msg = "Username, Password or Activationnummber wrong!<br>\n<a href=\"".$this->config('url')."index.php?id=login&amp;action=activate_form\">Activation</a>\n";
 		}
 		mysqli_close($connect);
 		return $msg;
 	}
 	function react($user,$pass,$email) {
-		global $config;
-		$dbpass = base64_decode($config['dbpass']);
-		$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
-		$pass_crypt = crypt($pass,$config['salt']);
+		$dbpass = base64_decode($this->config('dbpass'));
+		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
+		$pass_crypt = crypt($pass,$this->config('salt'));
 		$result = mysqli_query($connect,"SELECT user, pass, email FROM user WHERE user='$user' AND pass='$pass_crypt' AND email='$email'");
 		if(mysqli_num_rows($result) > 0) {
 			$result = mysqli_query($connect,"SELECT sid FROM user WHERE user='".$user."'");
 			if($row = mysqli_fetch_array($result, MYSQLI_BOTH)) {
 				if(isset($_POST['email'])) {
 					// Validate email
-					$email = htmlspecialchars($_POST['email']);
+					$email = htmlspecialchars($_POST['email'], ENT_QUOTES);
 					if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 						$msg = "<b>".$email."</b> is not a valid Emailaddress";
 					}
@@ -189,8 +189,8 @@ class main {
 				if($row['sid'] == "0") {
 					$msg = "Your Useraccount is allready activated!<br>\n";
 				} else {
-					if(mail($email,"Finish registration", "Username: ".$user."\nActivationnumber: ".$row['sid']."\n".$config['url']."index.php?id=login&action=activate_form&anr=".$row['sid']."\n","From: ".$config['email']." <".$config['email'].">")) {
-						$msg = "Email with Activationnumber was send to <b>".$email."</b><br>\n<a href=\"".$config['url']."index.php?id=login&amp;action=activate_form\">Activation</a>\n";
+					if(mail($email,"Finish registration", "Username: ".$user."\nActivationnumber: ".$row['sid']."\n".$this->config('url')."index.php?id=login&action=activate_form&anr=".$row['sid']."\n","From: ".$this->config('email')." <".$this->config('email').">")) {
+						$msg = "Email with Activationnumber was send to <b>".$email."</b><br>\n<a href=\"".$this->config('url')."index.php?id=login&amp;action=activate_form\">Activation</a>\n";
 					} else {
 						$msg = "EMAIL ERROR. Please contact Administrator!";
 					}					
@@ -205,9 +205,8 @@ class main {
 		return $msg;
 	}
 	function lostpass($user,$email) {
-		global $config;
-		$dbpass = base64_decode($config['dbpass']);
-		$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+		$dbpass = base64_decode($this->config('dbpass'));
+		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$result = mysqli_query($connect,"SELECT user, email FROM user WHERE user='$user' AND email='$email' AND sid=0");
 		if(mysqli_num_rows($result) > 0) {
 			function createRandomPassword($length=7,$chars="") { 
@@ -226,11 +225,11 @@ class main {
 				return $pass."%"; 
 			}
 			$createpass = createRandomPassword();
-			$pass_crypt = crypt($createpass,$config['salt']);
+			$pass_crypt = crypt($createpass,$this->config('salt'));
 			$statement = "UPDATE user SET pass='".$pass_crypt."' WHERE user='".$user."' AND email='".$email."'";
 			$result = mysqli_query($connect,$statement);
 			if(isset($result)) {
-				if(mail($email,"Lost password", "Username: ".$user."\nE-Mail: ".$email."\nNew Password: ".$createpass."\n","From: ".$config['email']." <".$config['email'].">")) {
+				if(mail($email,"Lost password", "Username: ".$user."\nE-Mail: ".$email."\nNew Password: ".$createpass."\n","From: ".$this->config('email')." <".$this->config('email').">")) {
 					$msg = "E-Mail with new password was send to <b>".$email."</b>\n";
 				} else {
 					$msg = "EMAIL ERROR. Please contact Administrator!";
@@ -246,33 +245,26 @@ class main {
 		return $msg;
 	}
 	function portal() {
-		global $config,$id,$counter;
+		global $id,$counter;
 		$this->includes();
 		$logs = new logs();
 		$logs->create();
-
 		$mod = $this->module();
 		$title_var = $this->title();
-
 		$template = new template();
 		$br = $template->load("br.tpl");
 		$tpl = $template->load("portal.tpl");
-
-		$portal_title = $config['title']." - ".$title_var;
-
+		$portal_title = $this->config('title')." - ".$title_var;
 		$tpl = str_replace(">>PORTALTITLE<<",$portal_title,$tpl);
-
 		$tpl = str_replace(">>COPYRIGHT<<","Copyrights &copy; 2020 by <a href=\"https://webportal.de.cool\" target=\"_BLANK\">MasterAccurate&reg;</a>, Germany, EU",$tpl);
 		$index = $template->load("cell_main.tpl");
 		$index = str_replace(">>CELL_TITLE<<",$title_var,$index);
 		$index = str_replace(">>CELL_INDEX<<",$mod,$index);
 		$logo = $template->load("img.tpl");
 		$img = "images/banner.png";
-
 		$svg_logo = $template->load("banner.tpl");
-		$svg_logo = str_replace(">>URL<<",$config['url']."index.php",$svg_logo);
-		$svg_logo = str_replace(">>LOGO_TEXT<<",$config['logo_text'],$svg_logo);
-
+		$svg_logo = str_replace(">>URL<<",$this->config('url')."index.php",$svg_logo);
+		$svg_logo = str_replace(">>LOGO_TEXT<<",$this->config('logo_text'),$svg_logo);
 		$logo = str_replace(">>IMG<<",$img,$svg_logo);
 		$cell_left = $template->load("menue-left1.tpl");
 		$cell_search = $template->load("menue-search.tpl");
@@ -299,5 +291,4 @@ class main {
 		return $content;
 	}
 }
-
 ?>

@@ -1,7 +1,7 @@
 <?php
 class logs {
 	function create() {
-		global $config,$id;
+		$main = new main();
 		if(getenv('HTTP_X_FORWARDED_FOR')) {
 			$ip = getenv('HTTP_X_FORWARDED_FOR');
 		}
@@ -12,7 +12,7 @@ class logs {
 			$ip = getenv('REMOTE_ADDR');
 		}
 		$cid = getenv('HTTP_USER_AGENT')."|||".$ip."|||".date("U")."|||".getenv('REQUEST_URI');
-		$file = $config['log_dir']."/logfile_".date("Y-m-d").".txt";
+		$file = $main->config('log_dir')."/logfile_".date("Y-m-d").".txt";
 		$f = @fopen($file,"a");
 		if($f) {
 			fputs($f,$cid."\n");

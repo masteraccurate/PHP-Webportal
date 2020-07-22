@@ -4,7 +4,8 @@ class search {
 		return "Suchen";
 	}
 	function main() {
-		global $id,$sid,$config;
+		global $id,$sid;
+		$main = new main();
 		$gbook = "";
 		$blog = "";
 		$links = "";
@@ -13,11 +14,11 @@ class search {
 		$media = "";
 		$board = "";
 		$content = "";
-		$dbpass = base64_decode($config['dbpass']);
-		$con = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+		$dbpass = base64_decode($main->config('dbpass'));
+		$con = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 		$name = "";
 		if(isset($_GET['search'])) {
-			$name = htmlspecialchars($_GET['search']);
+			$name = htmlspecialchars($_GET['search'], ENT_QUOTES);
 		} else {
 			$name = "";
 		}
@@ -28,40 +29,40 @@ class search {
 		}
 		$result = mysqli_query($con, "SELECT * FROM gbook WHERE comments LIKE '%{$name}%' OR name LIKE '%{$name}%'");
 		while ($row = mysqli_fetch_array($result)) {
-			$gbook .= "<b>Gbook</b><br>Benutzername: ".$row['name']."<br>Kommentar: ".$row['comments']."<br><br>\n\n";
+			$gbook .= "<b>Gbook</b><br>Username: ".$row['name']."<br>Kommentar: ".$row['comments']."<br><br>\n\n";
 		}
 		$result = mysqli_query($con, "SELECT * FROM blog WHERE comments LIKE '%{$name}%' OR name LIKE '%{$name}%'");
 		while ($row = mysqli_fetch_array($result)) {
-			$blog .= "<b>Blog</b><br>Benutzername: ".$row['name']."<br>Kommentar: ".$row['comments']."<br><br>\n\n";
+			$blog .= "<b>Blog</b><br>Username: ".$row['name']."<br>Kommentar: ".$row['comments']."<br><br>\n\n";
 		}
 		$result = mysqli_query($con, "SELECT * FROM links WHERE name LIKE '%{$name}%' OR title LIKE '%{$name}%' OR description LIKE '%{$name}%'");
 		while ($row = mysqli_fetch_array($result)) {
-			$links .= "<b>Links</b><br>Benutzername: ".$row['name']."<br><a href=\"index.php?id=links&cid=".$row['catid']."\">Titel: ".$row['title']."<br></a>Beschreibung: ".$row['description']."<br><br>\n\n";
+			$links .= "<b>Links</b><br>Username: ".$row['name']."<br><a href=\"index.php?id=links&cid=".$row['catid']."\">Title: ".$row['title']."<br></a>Beschreibung: ".$row['description']."<br><br>\n\n";
 		}
 		$result = mysqli_query($con, "SELECT * FROM files WHERE name LIKE '%{$name}%' OR title LIKE '%{$name}%' OR description LIKE '%{$name}%'");
 		while ($row = mysqli_fetch_array($result)) {
-			$files .= "<b>Files</b><br>Benutzername: ".$row['name']."<br><a href=\"index.php?id=files&cid=".$row['catid']."\">Titel: ".$row['title']."<br></a>Beschreibung: ".$row['description']."<br><br>\n\n";
+			$files .= "<b>Files</b><br>Username: ".$row['name']."<br><a href=\"index.php?id=files&cid=".$row['catid']."\">Title: ".$row['title']."<br></a>Beschreibung: ".$row['description']."<br><br>\n\n";
 		}
 		$result = mysqli_query($con, "SELECT * FROM images WHERE name LIKE '%{$name}%' OR title LIKE '%{$name}%' OR description LIKE '%{$name}%'");
 		while ($row = mysqli_fetch_array($result)) {
-			$images .= "<b>Images</b><br>Benutzername: ".$row['name']."<br><a href=\"index.php?id=images&cid=".$row['catid']."\">Titel: ".$row['title']."</a><br>Beschreibung: ".$row['description']."<br><br>\n\n";
+			$images .= "<b>Images</b><br>Username: ".$row['name']."<br><a href=\"index.php?id=images&cid=".$row['catid']."\">Title: ".$row['title']."</a><br>Beschreibung: ".$row['description']."<br><br>\n\n";
 		}
 		$result = mysqli_query($con, "SELECT * FROM media WHERE name LIKE '%{$name}%' OR title LIKE '%{$name}%' OR description LIKE '%{$name}%'");
 		while ($row = mysqli_fetch_array($result)) {
-			$media .= "<b>Media</b><br>Benutzername: ".$row['name']."<br><a href=\"index.php?id=media&cid=".$row['catid']."\">Titel: ".$row['title']."</a><br>Beschreibung: ".$row['description']."<br><br>\n\n";
+			$media .= "<b>Media</b><br>Username: ".$row['name']."<br><a href=\"index.php?id=media&cid=".$row['catid']."\">Title: ".$row['title']."</a><br>Beschreibung: ".$row['description']."<br><br>\n\n";
 		}
 		$result = mysqli_query($con, "SELECT * FROM board WHERE name LIKE '%{$name}%' OR title LIKE '%{$name}%' OR comment LIKE '%{$name}%'");
 		while ($row = mysqli_fetch_array($result)) {
-			$board .= "<b>Board</b><br>Benutzername: ".$row['name']."<br><a href=\"index.php?id=board&cid=".$row['catid']."&scid=".$row['subcatid']."\">Titel: ".$row['title']."</a><br>Kommentar: ".$row['comment']."<br><br>\n\n";
+			$board .= "<b>Board</b><br>Username: ".$row['name']."<br><a href=\"index.php?id=board&cid=".$row['catid']."&scid=".$row['subcatid']."\">Title: ".$row['title']."</a><br>Kommentar: ".$row['comment']."<br><br>\n\n";
 		}
 		mysqli_close($con);
 		if(isset($name) && ($name != "")) {
 			$content = $gbook.$blog.$links.$files.$images.$media.$board;
 			if(empty($content)) {
-				$content = "Nichts in der Datenbank gefunden";
+				$content = "Nothing found in Database";
 			}
 		} else {
-			$content = "Nichts zum suchen!";
+			$content = "Nothing to search!";
 		}
 		$smiley1 = "<img src=\"images/smileys/smiley1.png\">";
 		$smiley2 = "<img src=\"images/smileys/smiley2.png\">";

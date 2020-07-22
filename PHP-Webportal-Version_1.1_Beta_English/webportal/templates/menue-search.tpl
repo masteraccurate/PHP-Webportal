@@ -27,7 +27,7 @@ div.menu2 {
 <div class="menu2">
  <p>Search Men&uuml;</p>
  <div class="hilde2">
-<FORM ACTION="index.php" METHOD="GET"><br><INPUT TYPE="HIDDEN" NAME="id" VALUE="search"><INPUT TYPE="TEXT" NAME="search" SIZE="10" MAXLENGTH="256" PLACEHOLDER="Search..."><br><br><INPUT TYPE="Submit" VALUE="Search"><br></FORM>
+<FORM ACTION="index.php" METHOD="GET"><br><INPUT TYPE="HIDDEN" NAME="id" VALUE="search"><INPUT TYPE="TEXT" NAME="search" SIZE="10" MAXLENGTH="256" PLACEHOLDER="Search..."><br><br><INPUT TYPE="Submit" VALUE="Search"><br><br></FORM>
  </div>
 </div>
   </td>

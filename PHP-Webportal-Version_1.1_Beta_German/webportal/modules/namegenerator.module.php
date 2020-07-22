@@ -1,24 +1,4 @@
 <?php
-################################################
-# Author:       MasterAccurate                 #
-# E-Mail:       masteraccurate@yahoo.com       #
-# Website:      http://webportal.de.cool       #
-################################################
-# Project-Name: PHP-Webportal                  #
-# Filename:     namegenerator.module.php       #
-# Date:         2020-05-18                     #
-################################################
-#                  Copyright                   #
-# Copyright refers to the exclusive right to   #
-# a piece of work such as literature, music,   #
-# artwork and computer software including the  #
-# underlying algorithms, source code and the   #
-# program's appearance. Rights covered include #
-# copying, distributing and creating           #
-# derivative works. Most software is           #
-# distributed with a license or copyright      #
-# notice that explains how it can be used.     #
-################################################
 class namegenerator {
 	function title() {
 		return "Namegenerator";
@@ -115,7 +95,7 @@ class namegenerator {
 			$name = $name_1.$name_2;
 		}
 		$name = preg_replace('#\r|\n#', '', $name);
-		return "<font size=\"2\"><u>Nickname oder Fantasiename:</u> <b>".$name."</b></font><br><br>\n\n<a href=\"index.php?id=namegenerator\"><b>Generiere neuen Namen</b></a><br><br>Generiere einen neuen Namen so oft wie du willst, bis du einen Namen gefunden hast der dir gefällt.<br>\n";
+		return "<font size=\"2\"><u>Nickname oder Fantasiename:</u> <b>".$name."</b></font><br><br>\n\n<a href=\"index.php?id=namegenerator\"><b>Generiere neuen Namen</b></a><br><br>Generiere einen neuen Namen so oft wie du willst, bis du einen Namen gefunden hast der dir gefällt.<br><br>Wenn du das PHP-Script Namegenerator runterladen willst dann geh zu: <a href=\"https://sourceforge.net/projects/php-namegenerator/\" target=\"_BLANK\">Sourceforge</a>\n";
 	}
 }
 ?>

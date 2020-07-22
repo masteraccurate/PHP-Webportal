@@ -30,7 +30,8 @@ class gbook {
 		return "G&auml;stebuch";
 	}
 	function main() {
-		global $id,$sid,$config;
+		global $id,$sid;
+		$main = new main();
 		$content = "";
 		$email = "";
 		if(($sid ==  "post") && ($_POST['name'] != "") && ($_POST['comment'] != "")) {
@@ -38,12 +39,12 @@ class gbook {
 			$content = "";
 			$render = "";
 			$email = "";
-			$dbpass = base64_decode($config['dbpass']);
-			$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+			$dbpass = base64_decode($main->config('dbpass'));
+			$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			$datetime = date("U");
 			if(isset($_POST['email']) && ($_POST['email'] != "")) {
 				// Validate email
-				$email = htmlspecialchars($_POST['email']);
+				$email = htmlspecialchars($_POST['email'], ENT_QUOTES);
 				if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 					return("$email is not a valid email address");
 				}
@@ -66,14 +67,14 @@ class gbook {
 			$template = new template();
 			$render = $template->load("gbook_form.tpl");
 		} else {
-			$dbpass = base64_decode($config['dbpass']);
-			$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+			$dbpass = base64_decode($main->config('dbpass'));
+			$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			$limit = "0";
 			$page = "";
 			if(empty($_GET['page'])) {
 				$page = "1";
 			} else {
-				$page = htmlspecialchars($_GET['page']);
+				$page = htmlspecialchars($_GET['page'], ENT_QUOTES);
 			}
 			if($page == "1") {
 				$limit = "0";
@@ -85,7 +86,6 @@ class gbook {
 			}
 			$result = mysqli_query($connect, "SELECT * FROM gbook ORDER by id DESC LIMIT ".$limit.",5");
 			if(!$result){
-				$main = new main();
 				$content = $main->error("3","ERROR CONNECTING");
 			}
 			while($row = mysqli_fetch_array($result, MYSQLI_BOTH)){
@@ -95,7 +95,6 @@ class gbook {
 
 			$result = mysqli_query($connect, "SELECT * FROM gbook ORDER by ID");
 			if(!$result){
-				$main = new main();
 				$content = $main->error("3","ERROR CONNECTING");
 			}
 			$sites = "";

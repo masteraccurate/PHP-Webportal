@@ -1,27 +1,7 @@
 <?php
-################################################
-# Author:       MasterAccurate                 #
-# E-Mail:       masteraccurate@yahoo.com       #
-# Website:      http://webportal.de.cool       #
-################################################
-# Project-Name: PHP-Webportal                  #
-# Filename:     messenger.module.php           #
-# Date:         2020-05-18                     #
-################################################
-#                  Copyright                   #
-# Copyright refers to the exclusive right to   #
-# a piece of work such as literature, music,   #
-# artwork and computer software including the  #
-# underlying algorithms, source code and the   #
-# program's appearance. Rights covered include #
-# copying, distributing and creating           #
-# derivative works. Most software is           #
-# distributed with a license or copyright      #
-# notice that explains how it can be used.     #
-################################################
 $std_sid = "show";
 if(isset($_GET['sid']) && $_GET['sid'] != "NULL" && $_GET['sid'] != "" && $_GET['sid'] != "0" && $_GET['sid'] != "false") {
-	$sid = htmlspecialchars($_GET['sid']);
+	$sid = htmlspecialchars($_GET['sid'], ENT_QUOTES);
 } else {
 	$sid = $std_sid;
 }
@@ -30,19 +10,20 @@ class messenger {
 		return "Messenger";
 	}
 	function main() {
-		global $id,$sid,$config;
+		global $id,$sid;
+		$main = new main();
 		$content = "";
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == "1") {
 			if(($sid ==  "post") && ($_POST['name'] != "") && ($_POST['sender'] != "") && ($_POST['message'] != "")) {
-				$dbpass = base64_decode($config['dbpass']);
-				$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
-				$result = mysqli_query($connect,"SELECT user FROM user WHERE user='".htmlspecialchars($_POST['name'])."'");
+				$dbpass = base64_decode($main->config('dbpass'));
+				$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
+				$result = mysqli_query($connect,"SELECT user FROM user WHERE user='".$_POST['name']."'");
 				if(mysqli_num_rows($result) > 0) {
 					sleep(1);  // 1 second pause for spam-protection
 					$content = "";
 					$render = "";
-					$dbpass = base64_decode($config['dbpass']);
-					$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+					$dbpass = base64_decode($main->config('dbpass'));
+					$connect = mysqli_connect($main->$config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 					$datetime = date("U");
 					$send_name = htmlspecialchars($_POST['name'], ENT_QUOTES);
 					$send_sender = htmlspecialchars($_POST['sender'], ENT_QUOTES);
@@ -58,7 +39,6 @@ class messenger {
 					mysqli_close($connect);
 				} else {
 					$content = "Name ist nicht in der Datenbank!\n<br>\n<br>\n<a href=\"index.php?id=messenger&sid=form\">Nachricht neu Verfassen</a><br>\n";
-
 				}
 			} elseif($sid == "post" && ($_POST['name'] == "" || empty($_POST['message']))) {
 				$content = "Bitte Name (Empf&auml;nger) und Nachricht eingeben! <a href=\"index.php?id=messenger&amp;sid=form\">Nachricht versenden</a>";
@@ -67,14 +47,14 @@ class messenger {
 				$content = $template->load("messenger_form.tpl");
 				$content = str_replace(">>SENDER<<",$_SESSION['user'],$content);
 			} else {
-				$dbpass = base64_decode($config['dbpass']);
-				$connect = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+				$dbpass = base64_decode($main->config('dbpass'));
+				$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 				$limit = "0";
 				$page = "";
 				if(empty($_GET['page'])) {
 					$page = "1";
 				} else {
-					$page = htmlspecialchars($_GET['page']);
+					$page = htmlspecialchars($_GET['page'], ENT_QUOTES);
 				}
 				if($page == "1") {
 					$limit = "0";
@@ -86,7 +66,6 @@ class messenger {
 				}
 				$result = mysqli_query($connect, "SELECT * FROM messenger WHERE name='".$_SESSION['user']."' ORDER by datetime DESC LIMIT ".$limit.",5");
 				if(!$result){
-					$main = new main();
 					$content = $main->error("3","ERROR CONNECTING");
 				}
 				while($row = mysqli_fetch_array($result, MYSQLI_BOTH)){
@@ -95,7 +74,6 @@ class messenger {
 				}
 				$result = mysqli_query($connect, "SELECT * FROM messenger WHERE name='".$_SESSION['user']."' ORDER by ID");
 				if(!$result){
-					$main = new main();
 					$content = $main->error("3","ERROR CONNECTING");
 				}
 				$sites = "";

@@ -4,7 +4,8 @@ class search {
 		return "Search";
 	}
 	function main() {
-		global $id,$sid,$config;
+		global $id,$sid;
+		$main = new main();
 		$gbook = "";
 		$blog = "";
 		$links = "";
@@ -13,11 +14,11 @@ class search {
 		$media = "";
 		$board = "";
 		$content = "";
-		$dbpass = base64_decode($config['dbpass']);
-		$con = mysqli_connect($config['dbhost'], $config['dbuser'], $dbpass, $config['dbname']);
+		$dbpass = base64_decode($main->config('dbpass'));
+		$con = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 		$name = "";
 		if(isset($_GET['search'])) {
-			$name = htmlspecialchars($_GET['search']);
+			$name = htmlspecialchars($_GET['search'], ENT_QUOTES);
 		} else {
 			$name = "";
 		}

@@ -1,9 +1,9 @@
 <?php
 class template {
 	function load($template) {
-		global $config;
+		$main = new main();
 		$line = "";
-		$file = $config['tpl_dir']."/".$template;
+		$file = $main->config('tpl_dir')."/".$template;
 		if(file_exists($file)) {
 			$fp = fopen($file,"r");
 			while(!feof($fp)) {
