@@ -32,7 +32,7 @@ if(isset($_GET['id']) && $_GET['id'] != "NULL" && $_GET['id'] != "" && $_GET['id
 }
 
 class main {
-	function error($eid,$e_var) {
+	public function error($eid,$e_var) {
 		if($eid == "1") {
 			$error = "<font color=\"#FF0000\" face=\"Arial\">Template Error: File ".$e_var." not found!</font><br>\n";
 		} elseif($eid == "2") {
@@ -44,12 +44,12 @@ class main {
 		}
 		return $error;
 	}
-	function config($config_var) {
+	public function config($config_var) {
 		$dir_var = dirname(__FILE__);
 		include $dir_var."/config.inc.php";
 		return $config[$config_var];
 	}
-	function includes() {
+	private function includes() {
 		global $includes_dir;
 		$dir_var = dirname(__FILE__);
 		$idir = $includes_dir;
@@ -61,7 +61,7 @@ class main {
 		}
 		closedir($odir);
 	}
-	function module() {
+	private function module() {
 		global $id,$sid;
 		if($id != "") {
 			$dir_var = dirname(__FILE__);
@@ -78,7 +78,7 @@ class main {
 			return $this->error(2,$module);
 		}		
 	}
-	function title() {
+	private function title() {
 		global $id,$config;
 		if($id != "") {
 			$dir_var = dirname(__FILE__);
@@ -94,7 +94,7 @@ class main {
 			return $this->error(2,$module);
 		}
 	}
-	function login($user,$pass) {
+	public function login($user,$pass) {
 		$dbpass = base64_decode($this->config('dbpass'));
 		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$pass_crypt = crypt($pass,$this->config('salt'));
@@ -110,10 +110,10 @@ class main {
 		mysqli_close($connect);
 		return $msg;
 	}
-	function logout() {
+	public function logout() {
 		session_unset();
 	}
-	function register($user,$email,$pass) {
+	public function register($user,$email,$pass) {
 		$dbpass = base64_decode($this->config('dbpass'));
 		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$result = mysqli_query($connect,"SELECT user FROM user WHERE user='$user'");
@@ -149,7 +149,7 @@ class main {
 		mysqli_close($connect);
 		return $msg;
 	}
-	function activation($user,$pass,$active) {
+	public function activation($user,$pass,$active) {
 		$dbpass = base64_decode($this->config('dbpass'));
 		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$crypt_pass = crypt($pass,$this->config('salt'));
@@ -171,7 +171,7 @@ class main {
 		mysqli_close($connect);
 		return $msg;
 	}
-	function react($user,$pass,$email) {
+	public function react($user,$pass,$email) {
 		$dbpass = base64_decode($this->config('dbpass'));
 		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$pass_crypt = crypt($pass,$this->config('salt'));
@@ -204,7 +204,7 @@ class main {
 		mysqli_close($connect);
 		return $msg;
 	}
-	function lostpass($user,$email) {
+	public function lostpass($user,$email) {
 		$dbpass = base64_decode($this->config('dbpass'));
 		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$result = mysqli_query($connect,"SELECT user, email FROM user WHERE user='$user' AND email='$email' AND sid=0");
@@ -214,8 +214,7 @@ class main {
 				$chars = "abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ0123456789!#$%^&*()_-+=}]{[|?"; 
 				srand((double)microtime()*1000000); 
 				$i = 0; 
-				$pass = '' ; 
- 
+				$pass = '' ;
 				while ($i < $length) { 
 					$num = rand() % strlen($chars); 
 					$tmp = substr($chars, $num, 1); 
@@ -244,7 +243,7 @@ class main {
 		mysqli_close($connect);
 		return $msg;
 	}
-	function portal() {
+	private function portal() {
 		global $id,$counter;
 		$this->includes();
 		$logs = new logs();
@@ -284,7 +283,7 @@ class main {
 		}
 		return $content;
 	}
-	function output() {
+	public function output() {
 		$render = $this->portal();
 		$render = str_replace("\r","",$render);
 		$content = str_replace("\n","",$render);
