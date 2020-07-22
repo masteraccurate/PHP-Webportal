@@ -21,3 +21,9 @@ Version 1.1 Alpha
 Version 1.1 Beta
 - Wechsel HTML 4.01 zu HTML 5
 - Bugs gefix
+
+Version 1.1 Final
+- Änderungen in JavaScript in menue...tpl templates
+- Config-Helperfunction hinzugefügt und in module integriert
+- Klassen als private und public ausgezeichnet
+- Bugs gefixt
