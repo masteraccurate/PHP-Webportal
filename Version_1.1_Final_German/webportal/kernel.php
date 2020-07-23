@@ -34,13 +34,13 @@ if(isset($_GET['id']) && $_GET['id'] != "NULL" && $_GET['id'] != "" && $_GET['id
 class main {
 	public function error($eid,$e_var) {
 		if($eid == "1") {
-			$error = "<font color=\"#FF0000\" face=\"Arial\">Template Error: File ".$e_var." not found!</font><br>\n";
+			$error = "<p style=\"color:red;font-family:Arial\">Template Error: File ".$e_var." not found!</p>\n";
 		} elseif($eid == "2") {
-			$error = "<font color=\"#FF0000\" face=\"Arial\">Module Error: File ".$e_var." not found!</font><br>\n";
+			$error = "<p style=\"color:red;font-family:Arial\">Module Error: File ".$e_var." not found!</p>\n";
 		} elseif($eid == "3") {
-			$error = "<font color=\"#FF0000\" face=\"Arial\">MySQL-DB Error: Not connected to MySQL-Server with string: ".$e_var."</font><br>\n";
+			$error = "<p style=\"color:red;font-family:Arial\">MySQL-DB Error: Not connected to MySQL-Server with string: ".$e_var."</p>\n";
 		} else {
-			$error = "<font color=\"#FF0000\" face=\"Arial\">Kernel-Error: Variable eid or e_var in Error-Function not set!</font><br>\n";
+			$error = "<p style=\"color:red;font-family:Arial\">Kernel-Error: Variable eid or e_var in Error-Function not set!</p>\n";
 		}
 		return $error;
 	}
