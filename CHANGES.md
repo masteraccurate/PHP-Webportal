@@ -26,6 +26,6 @@ Version 1.1 Final
 - Changes in JavaScript in menue...tpl templates
 - Config-Helperfunction added and integrated in modules
 - Classes labeled as private and public
-- Bugs gefixt
+- Bugs fixed
 - 
 - Development Status (this version is still developed)
