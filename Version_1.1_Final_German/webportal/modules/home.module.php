@@ -15,7 +15,8 @@ class home {
 				"im Messenger hinzugef&uuml;gt.<br>Mit den Zeichen &#058;&#041; gibt es den <img src=\"images/smileys/smiley1.png\" alt=\"Smiley1\"> Smiley.<br>Mit den ".
 				"Zeichen &#058;D gibt es den <img src=\"images/smileys/smiley2.png\" alt=\"Smiley2\"> Smiley<br>und mit den Zeichen &#059;&#041; gibt es den ".
 				"<img src=\"images/smileys/smiley3.png\" alt=\"Smiley3\"> Smiley.<br><br>Die Zeichenfolge &#123;br&#125; ergibt einen Zeilenumbruch beim Text.<br><br>".
-				"<marquee><b>Neue Menües die per Click ausfahren und per Doppelklick wieder einfahren.</b></marquee><br><b>Einfach mal ausprobieren!</b> Doppelklick funktioniert bei Handy leider nicht.<br>\n";
+				"<marquee><b>Neue Menües die per Click ausfahren und per Doppelklick wieder einfahren.</b></marquee><br><b>Einfach mal ausprobieren!</b> Doppelklick funktioniert bei Handy leider nicht.<br><br>\n".
+				"<b>Hier ein demo-Account zum ausprobieren</b> - User: demo - Pass: logiN6$8";
 		}
 		return $content;
 	}

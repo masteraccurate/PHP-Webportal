@@ -23,7 +23,7 @@ Version 1.1 Beta
 - Fixed Bugs
 
 Version 1.1 Final
-- Changes in JavaScript in menue...tpl templates
+- Changes in JavaScript (JQuery) in menue...tpl templates
 - Config-Helperfunction added and integrated in modules
 - Classes labeled as private and public
 - Bugs gefixt

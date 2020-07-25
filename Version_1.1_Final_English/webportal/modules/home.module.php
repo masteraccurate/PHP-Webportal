@@ -27,7 +27,7 @@ class home {
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == "1") {
 			$content = "Welcome to User Area!";
 		} else {
-			$content = "Welcome to Webportal!";
+			$content = "<b>Welcome to Webportal!<br><br>Try out the demonstration-account</b> - user: demo - pass: logiN6$8";
 		}
 		return $content;
 	}
