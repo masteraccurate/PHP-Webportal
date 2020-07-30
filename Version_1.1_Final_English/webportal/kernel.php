@@ -96,10 +96,11 @@ class main {
 	}
 	public function login($user,$pass) {
 		$dbpass = base64_decode($this->config('dbpass'));
-		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
+		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$pass_crypt = crypt($pass,$this->config('salt'));
-		$result = mysqli_query($connect,"SELECT user, pass FROM user WHERE user='$user' AND pass='$pass_crypt' AND sid=0");
-		if(mysqli_num_rows($result) > 0) {
+		$statement = "SELECT user, pass FROM user WHERE user='$user' AND pass='$pass_crypt' AND sid='0'";
+		$result = $db->query($statement);
+		if($result->num_rows > 0) {
 			$_SESSION['user'] = $user;
 			$_SESSION['pass'] = $pass;
 			$_SESSION['loggedin'] = 1;
@@ -107,7 +108,7 @@ class main {
 		} else {
 			$msg = "Username oder Password wrong or Useraccount not activated\n";
 		}
-		mysqli_close($connect);
+		$db->close();
 		return $msg;
 	}
 	public function logout() {
@@ -115,9 +116,10 @@ class main {
 	}
 	public function register($user,$email,$pass) {
 		$dbpass = base64_decode($this->config('dbpass'));
-		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
-		$result = mysqli_query($connect,"SELECT user FROM user WHERE user='$user'");
-		if(mysqli_num_rows($result) > 0) {
+		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
+		$statement = "SELECT user FROM user WHERE user='$user'";
+		$result = $db->query($statement);
+		if($result->num_rows > 0) {
 			$msg = "Username <b>".$user."</b> is allready registred!\n";
 		} else {
 			if(isset($_POST['email'])) {
@@ -133,7 +135,8 @@ class main {
 			$post_homepage = htmlspecialchars($_POST['homepage'], ENT_QUOTES);
 			$random_nr = rand(11111111,99999999);
 			$statement = "INSERT INTO user (id,sid,user,pass,email,homepage,admin,mode,opt1,opt2,opt3,comment,signatur) VALUES(NULL,'".$random_nr."','".$post_name."','".$post_pass."','".$post_email."','".$post_homepage."','','','','','','','')";
-			$result = mysqli_query($connect,$statement);
+			$result->close();
+			$result = $db->query($statement);
 			if(isset($result)) {
 				if(mail($email,"Finish registration", "Username: ".$post_name."\nActivationnumber: ".$random_nr."\n".$this->config('url')."index.php?id=login&action=activate_form&anr=".$random_nr."\n","From: ".$this->config('email')." <".$this->config('email').">")) {
 					$activition = "Email with Activationnuber was send to <b>".$post_email."</b><br>\n<a href=\"".$this->config('url')."index.php?id=login&amp;action=activate_form\">Activation</a>\n";
@@ -146,20 +149,22 @@ class main {
 				$msg = "REGISTRATIONERROR User: ".$post_name." - E-Mail: ".$post_email." - Password: ".$post_pass;
 			}
 		}
-		mysqli_close($connect);
+		$db->close();
 		return $msg;
 	}
 	public function activation($user,$pass,$active) {
 		$dbpass = base64_decode($this->config('dbpass'));
-		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
+		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$crypt_pass = crypt($pass,$this->config('salt'));
-		$result = mysqli_query($connect,"SELECT user FROM user WHERE user='$user' AND pass='$crypt_pass' AND sid='$active'");
-		if(mysqli_num_rows($result) > 0) {
+		$statement = "SELECT user FROM user WHERE user='$user' AND pass='$crypt_pass' AND sid='$active'";
+		$result = $db->query($statement);
+		if($result->num_rows > 0) {
 			$post_name = htmlspecialchars($_POST['user'], ENT_QUOTES);
 			$post_pass = htmlspecialchars($_POST['pass'], ENT_QUOTES);
 			$post_active = htmlspecialchars($_POST['active'], ENT_QUOTES);
-			$statement = "UPDATE user SET sid='0' WHERE user='".$user."'";
-			$result = mysqli_query($connect,$statement);
+			$statement = "UPDATE user SET sid='0' WHERE user='$user'";
+			$result->close();
+			$result = $db->query($statement);
 			if(isset($result)) {
 				$msg = "User <b>".$user."</b> is registred and is activated with Act-Nr ".$active." ";			
 			} else {
@@ -168,17 +173,20 @@ class main {
 		} else {
 			$msg = "Username, Password or Activationnummber wrong!<br>\n<a href=\"".$this->config('url')."index.php?id=login&amp;action=activate_form\">Activation</a>\n";
 		}
-		mysqli_close($connect);
+		$db->close();
 		return $msg;
 	}
 	public function react($user,$pass,$email) {
 		$dbpass = base64_decode($this->config('dbpass'));
-		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
+		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$pass_crypt = crypt($pass,$this->config('salt'));
-		$result = mysqli_query($connect,"SELECT user, pass, email FROM user WHERE user='$user' AND pass='$pass_crypt' AND email='$email'");
-		if(mysqli_num_rows($result) > 0) {
-			$result = mysqli_query($connect,"SELECT sid FROM user WHERE user='".$user."'");
-			if($row = mysqli_fetch_array($result, MYSQLI_BOTH)) {
+		$statement = "SELECT user, pass, email FROM user WHERE user='$user' AND pass='$pass_crypt' AND email='$email'";
+		$result = $db->query($statement);
+		if($result->num_rows > 0) {
+			$statement = "SELECT sid FROM user WHERE user='$user'";
+			$result->close();
+			$result = $db->query($statement);
+			if($row = $result->fetch_array(MYSQLI_BOTH)) {
 				if(isset($_POST['email'])) {
 					// Validate email
 					$email = htmlspecialchars($_POST['email'], ENT_QUOTES);
@@ -201,14 +209,15 @@ class main {
 		} else {
 			$msg = "Username, Password or E-Mail wrong!\n";
 		}
-		mysqli_close($connect);
+		$db->close();
 		return $msg;
 	}
 	public function lostpass($user,$email) {
 		$dbpass = base64_decode($this->config('dbpass'));
-		$connect = mysqli_connect($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
-		$result = mysqli_query($connect,"SELECT user, email FROM user WHERE user='$user' AND email='$email' AND sid=0");
-		if(mysqli_num_rows($result) > 0) {
+		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
+		$statement = "SELECT user, email FROM user WHERE user='$user' AND email='$email' AND sid=0";
+		$result = $db->query($statement);
+		if($result->num_rows > 0) {
 			function createRandomPassword($length=7,$chars="") { 
 				if($chars=="")
 				$chars = "abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ0123456789!#$%^&*()_-+=}]{[|?"; 
@@ -225,8 +234,9 @@ class main {
 			}
 			$createpass = createRandomPassword();
 			$pass_crypt = crypt($createpass,$this->config('salt'));
-			$statement = "UPDATE user SET pass='".$pass_crypt."' WHERE user='".$user."' AND email='".$email."'";
-			$result = mysqli_query($connect,$statement);
+			$statement = "UPDATE user SET pass='$pass_crypt' WHERE user='$user' AND email='$email'";
+			$result->close();
+			$result = $db->query($statement);
 			if(isset($result)) {
 				if(mail($email,"Lost password", "Username: ".$user."\nE-Mail: ".$email."\nNew Password: ".$createpass."\n","From: ".$this->config('email')." <".$this->config('email').">")) {
 					$msg = "E-Mail with new password was send to <b>".$email."</b>\n";
@@ -240,7 +250,7 @@ class main {
 		} else {
 			$msg = "Username or Password wrong or Useraccount not activated\n";
 		}
-		mysqli_close($connect);
+		$db->close();
 		return $msg;
 	}
 	private function portal() {
