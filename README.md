@@ -46,3 +46,16 @@ copying, distributing and creating
 derivative works. Most software is
 distributed with a license or copyright
 notice that explains how it can be used.
+
+#Useright (Software License):
+Every user contributes by downloading this software
+your own risk and responsibility for
+everything that happens to the software and also in the case
+that third parties are harmed.
+It is expressly permitted to use this software for private purposes
+Use, copy and reproduce purposes
+as long as this is not done commercially and with reservation
+the source of this software.
+The use for teaching purposes is expressly permitted and also
+Allowed at your own risk and responsibility.
+The programmer does not offer guarantee or warranty claims for this software.
