@@ -47,7 +47,7 @@ derivative works. Most software is
 distributed with a license or copyright
 notice that explains how it can be used.
 
-#Useright (Software License):
+#Use right (Software License):
 Every user contributes by downloading this software
 your own risk and responsibility for
 everything that happens to the software and also in the case
