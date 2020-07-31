@@ -40,7 +40,7 @@ class gbook {
 			$render = "";
 			$email = "";
 			$dbpass = base64_decode($main->config('dbpass'));
-			$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
+			$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			$datetime = date("U");
 			if(isset($_POST['email']) && ($_POST['email'] != "")) {
 				// Validate email
@@ -52,15 +52,15 @@ class gbook {
 			$post_name = htmlspecialchars($_POST['name'], ENT_QUOTES);
 			$post_email = htmlspecialchars($email, ENT_QUOTES);
 			$post_comment = htmlspecialchars($_POST['comment'], ENT_QUOTES);
-			$statement = "INSERT INTO gbook (id,name,email,comments,datetime) VALUES(NULL,'".$post_name."','".$post_email."','".$post_comment."','".$datetime."')";
-			$result = mysqli_query($connect,$statement);
+			$statement = "INSERT INTO gbook (id,name,email,comments,datetime) VALUES(NULL,'$post_name','$post_email','$post_comment','$datetime')";
+			$result = $db->query($statement);
 			if(isset($result)) {
 				$link = "<a href=\"index.php?id=gbook\">Zum G&auml;stebuch</a><br>\n<br>\n";
 				$render = "Kommentar ins G&auml;stebuch eingetragen! ".$link;
 			} else {
 				$render = "ERROR POSTING COMMENT!\n";
 			}
-			mysqli_close($connect);
+			$db->close();
 		} elseif($sid == "post" && ($_POST['name'] == "" || empty($_POST['comment']))) {
 			$render = "Bitte Name und Kommentar eingeben! <a href=\"index.php?id=gbook&amp;sid=form\">Ins G&auml;stebuch eintragen</a>";
 		} elseif($sid == "form") {
@@ -68,7 +68,7 @@ class gbook {
 			$render = $template->load("gbook_form.tpl");
 		} else {
 			$dbpass = base64_decode($main->config('dbpass'));
-			$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
+			$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			$limit = "0";
 			$page = "";
 			if(empty($_GET['page'])) {
@@ -84,26 +84,24 @@ class gbook {
 				$page = $page*$ppage;
 				$limit = 0+$page;
 			}
-			$result = mysqli_query($connect, "SELECT * FROM gbook ORDER by id DESC LIMIT ".$limit.",5");
+			$result = $db->query("SELECT * FROM gbook ORDER by id DESC LIMIT ".$limit.",5");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
-			while($row = mysqli_fetch_array($result, MYSQLI_BOTH)){
+			while($row = $result->fetch_array(MYSQLI_BOTH)){
 				$content_var = "ID: ".$row['id']."<br>\nName: ".$row['name']."<br>\nE-Mail: ".$row['email']."<br>\nKommentar: ".$row['comments']."<br>\n Uhrzeit: ".date('Y-m-d H:i:s', $row['datetime'])."<br>\n<br><hr>\n";
 				$content .= $content_var;
 			}
-
-			$result = mysqli_query($connect, "SELECT * FROM gbook ORDER by ID");
+			$result->close();
+			$result = $db->query("SELECT * FROM gbook ORDER by ID");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
 			$sites = "";
 			$site_sum = "";
 			$sum = "";
-			while($row = mysqli_fetch_array($result, MYSQLI_BOTH)){
-				$id_var = $row['id'];
-				$sum = $id_var-1;
-			}
+			$row = $result->num_rows;  // So läuft es besser als mit fetch_array!
+			$sum = $row-1;
 			$site_sum = $sum/5;
 			$site_sum = floor($site_sum);
 			$site_sum = $site_sum+1;
@@ -122,9 +120,7 @@ class gbook {
 			$render = str_replace("\n","",$content);
 			$render = str_replace("\r","",$render);
 			$render = $link.$render."Seite: ".$sites;
-			mysqli_free_result($result);
-			mysqli_close($connect);
-
+			$db->close();
 		} 
 		return $render;
 	}

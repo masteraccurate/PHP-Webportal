@@ -28,7 +28,7 @@ class members {
 		$content = "";
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == "1") {
 			$dbpass = base64_decode($main->config('dbpass'));
-			$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
+			$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			$limit = "0";
 			$page = "";
 			if(empty($_GET['page'])) {
@@ -44,26 +44,23 @@ class members {
 				$page = $page*$ppage;
 				$limit = 0+$page;
 			}
-			$result = mysqli_query($connect, "SELECT * FROM user ORDER by id LIMIT ".$limit.",5");
+			$result = $db->query("SELECT * FROM user ORDER by id LIMIT ".$limit.",5");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
-			while($row = mysqli_fetch_array($result, MYSQLI_BOTH)){
+			while($row = $result->fetch_array(MYSQLI_BOTH)){
 				$content_var = "ID: ".$row['id']."<br>\nUsername: ".$row['user']."<br>\nHomepage: <a href=\"".$row['homepage']."\" target=\"_BLANK\">".$row['homepage']."</a><br>\n<br><hr>\n";
 				$content .= $content_var;
 			}
-
-			$result = mysqli_query($connect, "SELECT * FROM user ORDER by ID");
+			$result = $db->query("SELECT * FROM user ORDER by ID");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
 			$sites = "";
 			$site_sum = "";
 			$sum = "";
-			while($row = mysqli_fetch_array($result, MYSQLI_BOTH)){
-				$id_var = $row['id'];
-				$sum = $id_var-1;
-			}
+			$row = $result->num_rows;  // So läuft es besser als mit fetch_array!
+			$sum = $row-1;
 			$site_sum = $sum/5;
 			$site_sum = floor($site_sum);
 			$site_sum = $site_sum+1;
@@ -74,8 +71,7 @@ class members {
 			$content = str_replace("\n","",$content);
 			$content = str_replace("\r","",$content);
 			$content = $content."Seite: ".$sites;
-			mysqli_free_result($result);
-			mysqli_close($connect);
+			$db->close();
 		} else {
 			$content = "This area is only available to registered users.";
 		}

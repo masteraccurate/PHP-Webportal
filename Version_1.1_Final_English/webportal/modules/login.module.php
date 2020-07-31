@@ -93,7 +93,6 @@ class login {
 			$content = $template->load("activate_form.tpl");
 			$content = str_replace(">>anr<<",$anr,$content);
 		} elseif($action == "react_form") {
-			$template = new template();
 			$content = $template->load("react_form.tpl");
 		} elseif($action == "react") {
 			$user = htmlspecialchars($_POST['user'], ENT_QUOTES);

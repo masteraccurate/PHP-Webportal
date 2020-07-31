@@ -36,22 +36,22 @@ class profile {
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == "1") {
 			if($sid == "post") {
 				$dbpass = base64_decode($main->config('dbpass'));
-				$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
+				$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 				$crypt_pass = crypt(htmlspecialchars($_POST['pass'], ENT_QUOTES),$main->config('salt'));
 				$statement = "UPDATE user SET pass='".$crypt_pass."', email='".htmlspecialchars($_POST['email'], ENT_QUOTES)."', homepage='".htmlspecialchars($_POST['homepage'], ENT_QUOTES)."' WHERE user='".$_SESSION['user']."'";
-				$result = mysqli_query($connect,$statement);
+				$result = $db->query($statement);
 				if(isset($result)) {
 					$msg = "User-Profile of <b>".$_SESSION['user']."</b> is configured!<br>\n<br>\n<a href=\"index.php?id=profile\">Back to Profile</a>";
 				} else {
 					$msg = "UPDATE ERROR";
 				}
 				$content = $msg;
-				mysqli_close($connect);
+				$db->close();
 			} elseif($sid == "form") {
 				$dbpass = base64_decode($main->config('dbpass'));
-				$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
-				$result = mysqli_query($connect, "SELECT * FROM user WHERE user='".$_SESSION['user']."'");
-				$row = mysqli_fetch_array($result, MYSQLI_BOTH);
+				$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
+				$result = $db->query("SELECT * FROM user WHERE user='".$_SESSION['user']."'");
+				$row = $result->fetch_array(MYSQLI_BOTH);
 				$email = $row['email'];
 				$homepage = $row['homepage'];
 				$template = new template();
@@ -59,22 +59,21 @@ class profile {
 				$content = str_replace(">>USER<<",$_SESSION['user'],$content);
 				$content = str_replace(">>EMAIL<<",$email,$content);
 				$content = str_replace(">>HOMEPAGE<<",$homepage,$content);
-				mysqli_close($connect);
+				$db->close();
 			} else {
 				$dbpass = base64_decode($main->config('dbpass'));
-				$connect = mysqli_connect($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
+				$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 				$limit = "0";
 				$page = "";
-				$result = mysqli_query($connect, "SELECT * FROM user WHERE user='".$_SESSION['user']."'");
+				$result = $db->query("SELECT * FROM user WHERE user='".$_SESSION['user']."'");
 				if(!$result){
 					$content = $main->error("3","ERROR CONNECTING");
 				}
-				$row = mysqli_fetch_array($result, MYSQLI_BOTH);
+				$row = $result->fetch_array(MYSQLI_BOTH);
 				$content_var = "ID: ".$row['id']."<br>\nUsername: ".$row['user']."<br>\nE-Mail: ".$row['email']."<br>\nHomepage: ".$row['homepage']."<br>\n";
 				$link = "<br>\n<a href=\"index.php?id=profile&sid=form\">Change Profile</a>";
 				$content = $content_var.$link;
-				mysqli_free_result($result);
-				mysqli_close($connect);
+				$db->close();
 			}
 		} else {
 			$content = "This area is only available to registered users.";
