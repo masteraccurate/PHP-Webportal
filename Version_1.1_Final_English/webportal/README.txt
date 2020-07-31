@@ -54,8 +54,8 @@ everything that happens to the software and also in the case
 that third parties are harmed.
 It is expressly permitted to use this software for private purposes
 Use, copy and reproduce purposes
-as long as this is not done commercially and with reservation
-the source of this software.
+as long as this is not done commercially and with mention
+the author source of this software.
 The use for teaching purposes is expressly permitted and also
 Allowed at your own risk and responsibility.
 The programmer does not offer guarantee or warranty claims for this software.
