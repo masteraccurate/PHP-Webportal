@@ -1,2 +1,0 @@
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36|||5.146.84.26|||1595396034|||/webportal_en/
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36|||5.146.84.26|||1595396035|||/webportal_en/
