@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: masteraccurate.lima-db.de:3306
--- Erstellungszeit: 25. Jun 2020 um 18:48
+-- Erstellungszeit: 31. Jul 2020 um 15:01
 -- Server-Version: 5.7.29-32-log
 -- PHP-Version: 5.6.40
 
@@ -237,13 +237,13 @@ CREATE TABLE `user` (
   `pass` varchar(255) COLLATE utf8mb4_german2_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_german2_ci NOT NULL,
   `homepage` varchar(255) COLLATE utf8mb4_german2_ci NOT NULL,
-  `admin` varchar(255) COLLATE utf8mb4_german2_ci NOT NULL,
-  `mode` varchar(255) COLLATE utf8mb4_german2_ci NOT NULL,
-  `opt1` varchar(255) COLLATE utf8mb4_german2_ci NOT NULL,
-  `opt2` varchar(255) COLLATE utf8mb4_german2_ci NOT NULL,
-  `opt3` varchar(255) COLLATE utf8mb4_german2_ci NOT NULL,
-  `comment` text COLLATE utf8mb4_german2_ci NOT NULL,
-  `signatur` text COLLATE utf8mb4_german2_ci NOT NULL
+  `admin` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL,
+  `mode` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL,
+  `opt1` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL,
+  `opt2` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL,
+  `opt3` varchar(255) COLLATE utf8mb4_german2_ci DEFAULT NULL,
+  `comment` text COLLATE utf8mb4_german2_ci,
+  `signatur` text COLLATE utf8mb4_german2_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
 --
@@ -266,9 +266,7 @@ ALTER TABLE `board`
 -- Indizes für die Tabelle `board_cat`
 --
 ALTER TABLE `board_cat`
-  ADD PRIMARY KEY (`catid`),
-  ADD UNIQUE KEY `catid` (`catid`,`category`),
-  ADD KEY `category` (`category`);
+  ADD PRIMARY KEY (`catid`) USING BTREE;
 
 --
 -- Indizes für die Tabelle `board_subcat`
@@ -280,8 +278,7 @@ ALTER TABLE `board_subcat`
 -- Indizes für die Tabelle `files`
 --
 ALTER TABLE `files`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `files_cat`
@@ -301,8 +298,7 @@ ALTER TABLE `gbook`
 -- Indizes für die Tabelle `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `images_cat`
@@ -316,8 +312,7 @@ ALTER TABLE `images_cat`
 -- Indizes für die Tabelle `links`
 --
 ALTER TABLE `links`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `links_cat`
@@ -331,8 +326,7 @@ ALTER TABLE `links_cat`
 -- Indizes für die Tabelle `media`
 --
 ALTER TABLE `media`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `media_cat`
@@ -363,6 +357,24 @@ ALTER TABLE `user`
 --
 ALTER TABLE `blog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `board`
+--
+ALTER TABLE `board`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `board_cat`
+--
+ALTER TABLE `board_cat`
+  MODIFY `catid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `board_subcat`
+--
+ALTER TABLE `board_subcat`
+  MODIFY `subcatid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `files`

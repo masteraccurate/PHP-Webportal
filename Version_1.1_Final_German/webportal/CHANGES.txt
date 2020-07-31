@@ -26,4 +26,5 @@ Version 1.1 Final
 - Änderungen in JavaScript (JQuery) in menue...tpl templates
 - Config-Helperfunction hinzugefügt und in module integriert
 - Klassen als private und public ausgezeichnet
+- db.module.php hinzugefügt zu includes und integriert im PHP-Webportal
 - Bugs gefixt
