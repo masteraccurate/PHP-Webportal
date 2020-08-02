@@ -23,9 +23,15 @@ Version 1.1 Beta
 - Fixed Bugs
 
 Version 1.1 Final
-- Changes in JavaScript in menue...tpl templates
+- Changes in JavaScript (JQuery) in menue...tpl templates
 - Config-Helperfunction added and integrated in modules
 - Classes labeled as private and public
+- db.module.php added to includes and integrated in PHP-Webportal
+- Bugs gefixt
+
+Version 1.1 Final RC2
+- Website Layout changed (animated menu only on left side)
+- Animated Menu changed to new look and faster movement
 - Bugs fixed
 - 
 - Development Status (this version is still developed)
