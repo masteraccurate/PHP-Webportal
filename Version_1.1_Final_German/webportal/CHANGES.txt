@@ -28,3 +28,9 @@ Version 1.1 Final
 - Klassen als private und public ausgezeichnet
 - db.module.php hinzugefügt zu includes und integriert im PHP-Webportal
 - Bugs gefixt
+
+Version 1.1 Final RC2
+- Website Layout geändert (animiertes menü nur an der linken seite)
+- Animiertes Menü hat besseren look und ist schneller
+-
+- Bugs gefixt

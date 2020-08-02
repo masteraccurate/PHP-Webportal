@@ -58,19 +58,18 @@ function symbols(a)
         <TD BGCOLOR="#FFFFFF" WIDTH="928" HEIGHT="90" ALIGN="CENTER" VALIGN="MIDDLE">>>LOGO<<</TD>
        </TR>
        <TR>
-        <TD BGCOLOR="#FFFFFF" WIDTH="928" HEIGHT="426" ALIGN="CENTER" VALIGN="TOP">
+        <TD BGCOLOR="#FFFFFF" WIDTH="928" HEIGHT="466" ALIGN="CENTER" VALIGN="TOP">
          <TABLE BORDER="0" WIDTH="928" CELLSPACING="0" CELLPADDING="0" BGCOLOR="#FFFFFF">
           <TR>
-           <TD WIDTH="160" ALIGN="CENTER" VALIGN="TOP"><br>>>CELL_LEFT<<</TD>
-           <TD WIDTH="608" ALIGN="CENTER" VALIGN="TOP"><br>>>CELL_MAIN<<</TD>
-           <TD WIDTH="160" ALIGN="CENTER" VALIGN="TOP"><br>>>CELL_RIGHT<<</TD>
+           <TD WIDTH="198" height="400" ALIGN="CENTER" VALIGN="TOP" bgcolor="#ffffff"><br>>>CELL_LEFT<<</TD>
+           <TD WIDTH="682" ALIGN="CENTER" VALIGN="TOP" bgcolor="#ffffff" rowspan="2"><br>>>CELL_MAIN<<</TD>
           </TR>
          </TABLE>
 <BR>
         </TD>
        </TR>
        <TR>
-        <TD WIDTH="728" HEIGHT="10" BGCOLOR="#000000" ALIGN="CENTER" VALIGN="MIDDLE" CLASS="copyright">>>COPYRIGHT<<</TD>
+        <TD WIDTH="728" HEIGHT="10" BGCOLOR="#ffffff" ALIGN="CENTER" VALIGN="MIDDLE" CLASS="copyright">>>COPYRIGHT<<</TD>
        </TR>
       </TABLE>
 <br>

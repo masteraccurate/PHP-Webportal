@@ -273,22 +273,22 @@ class main {
 		$svg_logo = $template->load("banner.tpl");
 		$svg_logo = str_replace(">>URL<<",$this->config('url')."index.php",$svg_logo);
 		$svg_logo = str_replace(">>LOGO_TEXT<<",$this->config('logo_text'),$svg_logo);
-		$cell_left = $template->load("menue-left1.tpl");
+		$cell_main = $template->load("menue-main.tpl");
 		$cell_search = $template->load("menue-search.tpl");
 		$cell_valid = $template->load("valid.tpl");
-		$cell_login = $template->load("menue-login.tpl");
-		$cell_right = $template->load("menue-right1.tpl");
-		$cell_right = str_replace(">>COUNTER<<",$counter,$cell_right);
-		$content = str_replace(">>LOGO<<",$svg_logo,$tpl);
-		$content = str_replace(">>CELL_LEFT<<",$cell_left.$br.$cell_search.$cell_valid,$content);
-		$content = str_replace(">>CELL_MAIN<<",$index,$content);
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == "1") {
 			$menue_user = $template->load("menue-user.tpl");
 			$menue_user = str_replace(">>USER<<",$_SESSION['user'],$menue_user);
-			$content = str_replace(">>CELL_RIGHT<<",$menue_user.$br.$cell_right,$content);
+			$content_usr = $menue_user;
 		} else {
-			$content = str_replace(">>CELL_RIGHT<<",$cell_login.$br.$cell_right,$content);
+			$cell_login = $template->load("menue-login.tpl");
+			$content_usr = $cell_login;
 		}
+		$cell_tools = $template->load("menue-tools.tpl");
+		$cell_tools = str_replace(">>COUNTER<<",$counter,$cell_tools);
+		$content = str_replace(">>LOGO<<",$svg_logo,$tpl);
+		$content = str_replace(">>CELL_LEFT<<",$cell_main.$content_usr.$cell_search.$cell_tools,$content);
+		$content = str_replace(">>CELL_MAIN<<",$index,$content);
 		return $content;
 	}
 	public function output() {
