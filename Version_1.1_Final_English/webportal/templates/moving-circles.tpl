@@ -1,25 +1,4 @@
-<!--
-  --color-1: #6e40aa;
-  --color-2: #4c6edb;
-  --color-3: #24aad8;
-  --color-4: #1ac7c2;
-  --color-5: #1ddea3;
-
-  --color-1: #666666;
-  --color-2: #888888;
-  --color-3: #aaaaaa;
-  --color-4: #cccccc;
-  --color-5: #eeeeee;
--->
 <style>
-:root {
-  --color-1: #6e40aa;
-  --color-2: #4c6edb;
-  --color-3: #24aad8;
-  --color-4: #1ac7c2;
-  --color-5: #1ddea3;
-}
-
 .shape {
   animation: moveCircle 1250ms ease-in-out both infinite;
 }
