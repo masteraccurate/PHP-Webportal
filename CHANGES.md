@@ -2,12 +2,12 @@ Version 1.0 Final
 
 
 Version 1.0 Final RC2
-- Bugs Fixed
+- Bugs fixed
 - Board-Module included
 - Search-Function updated
 
 Version 1.0 Final Release
-- Bugs Fixed
+- Bugs fixed
 - ajax-Chat integrated
 - favicon.ico integrated
 
@@ -20,7 +20,7 @@ Version 1.1 Alpha
 
 Version 1.1 Beta
 - Changed from HTML 4.01 to HTML 5
-- Fixed Bugs
+- Bugs fixed
 
 Version 1.1 Final
 - Changes in JavaScript (JQuery) in menue...tpl templates
