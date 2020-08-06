@@ -27,7 +27,7 @@ Version 1.1 Final
 - Config-Helperfunction added and integrated in modules
 - Classes labeled as private and public
 - db.module.php added to includes and integrated in PHP-Webportal
-- Bugs gefixt
+- Bugs fixed
 
 Version 1.1 Final RC2
 - Website Layout changed (animated menu only on left side)
