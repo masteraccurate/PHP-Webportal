@@ -32,6 +32,7 @@ Version 1.1 Final
 Version 1.1 Final RC2
 - Website Layout changed (animated menu only on left side)
 - Animated Menu changed to new look and faster movement
-- Bugs fixed
-- 
+- Sanitizer functions for identifiers integrated in kernel.php and implemented in modules
+-
+- Bugs Fixed 
 - Development Status (this version is still developed)

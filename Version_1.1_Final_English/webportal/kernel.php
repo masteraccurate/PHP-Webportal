@@ -24,13 +24,6 @@
 $std_id = "home";
 $includes_dir = "includes";
 
-// Do not edit below if don't know what to do!
-if(isset($_GET['id']) && $_GET['id'] != "NULL" && $_GET['id'] != "" && $_GET['id'] != "false" && $_GET['id'] != "0") {
-	$id = htmlspecialchars($_GET['id'], ENT_QUOTES);
-} else {
-	$id = $std_id;
-}
-
 class main {
 	public function error($eid,$e_var) {
 		if($eid == "1") {
@@ -43,6 +36,35 @@ class main {
 			$error = "<p style=\"color:red;font-family:Arial\">Kernel-Error: Variable eid or e_var in Error-Function not set!</p>\n";
 		}
 		return $error;
+	}
+	public function id() {		// Identifyer Sanitizer Function
+		global $std_id;
+		if(isset($_GET['id']) && (htmlspecialchars($_GET['id'], ENT_QUOTES) != "") && (htmlspecialchars($_GET['id'], ENT_QUOTES) != "0") && (htmlspecialchars($_GET['id'], ENT_QUOTES) != "NULL") && (htmlspecialchars($_GET['id'], ENT_QUOTES) != "false")) {
+			return htmlspecialchars($_GET['id'], ENT_QUOTES);
+		} else {
+			return $std_id;
+		}
+	}
+	public function sid() {	// Sub-Identifyer Sanitizer Function
+		if(isset($_GET['sid']) && (htmlspecialchars($_GET['sid'], ENT_QUOTES) != "") && (htmlspecialchars($_GET['sid'], ENT_QUOTES) != "0") && (htmlspecialchars($_GET['sid'], ENT_QUOTES) != "NULL") && (htmlspecialchars($_GET['sid'], ENT_QUOTES) != "false")) {
+			return htmlspecialchars($_GET['sid'], ENT_QUOTES);
+		} else {
+			return "";
+		}
+	}
+	public function cid() {	// Category-Identifyer Sanitizer Function
+		if(isset($_GET['cid']) && (htmlspecialchars($_GET['cid'], ENT_QUOTES) != "") && (htmlspecialchars($_GET['cid'], ENT_QUOTES) != "0") && (htmlspecialchars($_GET['cid'], ENT_QUOTES) != "NULL") && (htmlspecialchars($_GET['cid'], ENT_QUOTES) != "false")) {
+			return htmlspecialchars($_GET['cid'], ENT_QUOTES);
+		} else {
+			return "";
+		}
+	}
+	public function scid() {	// SubCategory-Identifyer Sanitizer Function
+		if(isset($_GET['scid']) && (htmlspecialchars($_GET['scid'], ENT_QUOTES) != "") && (htmlspecialchars($_GET['scid'], ENT_QUOTES) != "0") && (htmlspecialchars($_GET['scid'], ENT_QUOTES) != "NULL") && (htmlspecialchars($_GET['scid'], ENT_QUOTES) != "false")) {
+			return htmlspecialchars($_GET['scid'], ENT_QUOTES);
+		} else {
+			return "";
+		}
 	}
 	public function config($config_var) {
 		$dir_var = dirname(__FILE__);
@@ -62,14 +84,14 @@ class main {
 		closedir($odir);
 	}
 	private function module() {
-		global $id,$sid;
-		if($id != "") {
+		if($this->id() != "") {
 			$dir_var = dirname(__FILE__);
 			$dir = $this->config('mod_dir');
-				$module = $dir_var."/".$dir."/".$id.".module.php";
+				$module = $dir_var."/".$dir."/".$this->id().".module.php";
 			if(file_exists($module)) {
 				include $module;
-				$var_id = new $id();
+				$id_func = $this->id();
+				$var_id = new $id_func();
 				return $var_id->main();
 			} else {
 				return $this->error(2,$module);
@@ -79,13 +101,13 @@ class main {
 		}		
 	}
 	private function title() {
-		global $id,$config;
-		if($id != "") {
+		if($this->id() != "") {
 			$dir_var = dirname(__FILE__);
 			$dir = $this->config('mod_dir');
-				$module = $dir_var."/".$dir."/".$id.".module.php";
+				$module = $dir_var."/".$dir."/".$this->id().".module.php";
 			if(file_exists($module)) {
-				$var_id = new $id();
+				$id_func = $this->id();
+				$var_id = new $id_func();
 				return $var_id->title();
 			} else {
 				return $this->error(2,$module);
@@ -254,7 +276,7 @@ class main {
 		return $msg;
 	}
 	private function portal() {
-		global $id,$counter;
+		global $counter;
 		$this->includes();
 		$logs = new logs();
 		$logs->create();

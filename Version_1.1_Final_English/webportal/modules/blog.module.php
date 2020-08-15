@@ -19,19 +19,15 @@
 # distributed with a license or copyright      #
 # notice that explains how it can be used.     #
 ################################################
-$std_sid = "show";
-if(isset($_GET['sid']) && $_GET['sid'] != "NULL" && $_GET['sid'] != "" && $_GET['sid'] != "0" && $_GET['sid'] != "false") {
-	$sid = htmlspecialchars($_GET['sid'], ENT_QUOTES);
-} else {
-	$sid = $std_sid;
-}
+
 class blog {
 	function title() {
 		return "Blog";
 	}
 	function main() {
-		global $id,$sid;
 		$main = new main();
+		$id = $main->id();
+		$sid = $main->sid();
 		$content = "";
 		$email = "";
 		if(($sid ==  "post") && ($_POST['name'] != "") && ($_POST['comment'] != "") && isset($_SESSION['loggedin'])) {

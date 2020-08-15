@@ -57,5 +57,5 @@ Use, copy and reproduce purposes
 as long as this is not done commercially and with mention
 the author source of this software.
 The use for teaching purposes is expressly permitted and also
-allowed at your own risk and responsibility.
+Allowed at your own risk and responsibility.
 The programmer does not offer guarantee or warranty claims for this software.

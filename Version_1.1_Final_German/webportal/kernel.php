@@ -24,15 +24,8 @@
 $std_id = "home";
 $includes_dir = "includes";
 
-// Do not edit below if don't know what to do!
-if(isset($_GET['id']) && $_GET['id'] != "NULL" && $_GET['id'] != "" && $_GET['id'] != "false" && $_GET['id'] != "0") {
-	$id = htmlspecialchars($_GET['id'], ENT_QUOTES);
-} else {
-	$id = $std_id;
-}
-
 class main {
-	public function error($eid,$e_var) {
+	public function error($eid,$e_var) {		// Error Function
 		if($eid == "1") {
 			$error = "<p style=\"color:red;font-family:Arial\">Template Error: File ".$e_var." not found!</p>\n";
 		} elseif($eid == "2") {
@@ -44,12 +37,41 @@ class main {
 		}
 		return $error;
 	}
-	public function config($config_var) {
+	public function id() {		// Identifyer Sanitizer Function
+		global $std_id;
+		if(isset($_GET['id']) && (htmlspecialchars($_GET['id'], ENT_QUOTES) != "") && (htmlspecialchars($_GET['id'], ENT_QUOTES) != "0") && (htmlspecialchars($_GET['id'], ENT_QUOTES) != "NULL") && (htmlspecialchars($_GET['id'], ENT_QUOTES) != "false")) {
+			return htmlspecialchars($_GET['id'], ENT_QUOTES);
+		} else {
+			return $std_id;
+		}
+	}
+	public function sid() {	// Sub-Identifyer Sanitizer Function
+		if(isset($_GET['sid']) && (htmlspecialchars($_GET['sid'], ENT_QUOTES) != "") && (htmlspecialchars($_GET['sid'], ENT_QUOTES) != "0") && (htmlspecialchars($_GET['sid'], ENT_QUOTES) != "NULL") && (htmlspecialchars($_GET['sid'], ENT_QUOTES) != "false")) {
+			return htmlspecialchars($_GET['sid'], ENT_QUOTES);
+		} else {
+			return "";
+		}
+	}
+	public function cid() {	// Category-Identifyer Sanitizer Function
+		if(isset($_GET['cid']) && (htmlspecialchars($_GET['cid'], ENT_QUOTES) != "") && (htmlspecialchars($_GET['cid'], ENT_QUOTES) != "0") && (htmlspecialchars($_GET['cid'], ENT_QUOTES) != "NULL") && (htmlspecialchars($_GET['cid'], ENT_QUOTES) != "false")) {
+			return htmlspecialchars($_GET['cid'], ENT_QUOTES);
+		} else {
+			return "";
+		}
+	}
+	public function scid() {	// SubCategory-Identifyer Sanitizer Function
+		if(isset($_GET['scid']) && (htmlspecialchars($_GET['scid'], ENT_QUOTES) != "") && (htmlspecialchars($_GET['scid'], ENT_QUOTES) != "0") && (htmlspecialchars($_GET['scid'], ENT_QUOTES) != "NULL") && (htmlspecialchars($_GET['scid'], ENT_QUOTES) != "false")) {
+			return htmlspecialchars($_GET['scid'], ENT_QUOTES);
+		} else {
+			return "";
+		}
+	}
+	public function config($config_var) {		// Configuration File Function
 		$dir_var = dirname(__FILE__);
 		include $dir_var."/config.inc.php";
 		return $config[$config_var];
 	}
-	private function includes() {
+	private function includes() {		// Includes Module-Loader
 		global $includes_dir;
 		// Set includes directory
 		$dir_var = dirname(__FILE__);
@@ -62,15 +84,15 @@ class main {
 		}
 		closedir($odir);
 	}
-	private function module() {
-		global $id,$sid;
-		if($id != "") {
+	private function module() {		// Modules-Main Module-Loader
+		if($this->id() != "") {
 			$dir_var = dirname(__FILE__);
 			$dir = $this->config('mod_dir');
-				$module = $dir_var."/".$dir."/".$id.".module.php";
+				$module = $dir_var."/".$dir."/".$this->id().".module.php";
 			if(file_exists($module)) {
 				include $module;
-				$var_id = new $id();
+				$id_func = $this->id();
+				$var_id = new $id_func();
 				return $var_id->main();
 			} else {
 				return $this->error(2,$module);
@@ -79,14 +101,14 @@ class main {
 			return $this->error(2,$module);
 		}		
 	}
-	private function title() {
-		global $id;
-		if($id != "") {
+	private function title() {		// Modules-Title Module-Loader
+		if($this->id() != "") {
 			$dir_var = dirname(__FILE__);
 			$dir = $this->config('mod_dir');
-				$module = $dir_var."/".$dir."/".$id.".module.php";
+				$module = $dir_var."/".$dir."/".$this->id().".module.php";
 			if(file_exists($module)) {
-				$var_id = new $id();
+				$id_func = $this->id();
+				$var_id = new $id_func();
 				return $var_id->title();
 			} else {
 				return $this->error(2,$module);
@@ -95,7 +117,7 @@ class main {
 			return $this->error(2,$module);
 		}
 	}
-	public function login($user,$pass) {
+	public function login($user,$pass) {		// Login Function
 		$dbpass = base64_decode($this->config('dbpass'));
 		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$pass_crypt = crypt($pass,$this->config('salt'));
@@ -112,10 +134,10 @@ class main {
 		$db->close();
 		return $msg;
 	}
-	public function logout() {
+	public function logout() {		// Logout Function
 		session_unset();
 	}
-	public function register($user,$email,$pass) {
+	public function register($user,$email,$pass) {		// Register Function
 		$dbpass = base64_decode($this->config('dbpass'));
 		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$statement = "SELECT user FROM user WHERE user='$user'";
@@ -153,7 +175,7 @@ class main {
 		$db->close();
 		return $msg;
 	}
-	public function activation($user,$pass,$active) {
+	public function activation($user,$pass,$active) {		// Activation Function
 		$dbpass = base64_decode($this->config('dbpass'));
 		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$crypt_pass = crypt($pass,$this->config('salt'));
@@ -177,7 +199,7 @@ class main {
 		$db->close();
 		return $msg;
 	}
-	public function react($user,$pass,$email) {
+	public function react($user,$pass,$email) {		// Reactivation Function
 		$dbpass = base64_decode($this->config('dbpass'));
 		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$pass_crypt = crypt($pass,$this->config('salt'));
@@ -213,7 +235,7 @@ class main {
 		$db->close();
 		return $msg;
 	}
-	public function lostpass($user,$email) {
+	public function lostpass($user,$email) {		// Lost Password Function
 		$dbpass = base64_decode($this->config('dbpass'));
 		$db = new Database($this->config('dbhost'), $this->config('dbuser'), $dbpass, $this->config('dbname'));
 		$statement = "SELECT user, email FROM user WHERE user='$user' AND email='$email' AND sid=0";
@@ -254,8 +276,9 @@ class main {
 		$db->close();
 		return $msg;
 	}
-	private function portal() {
-		global $sid,$id,$counter;
+	private function portal() {		// Portal Function
+		global $counter;
+		global $counter;
 		$this->includes();
 		$logs = new logs();
 		$logs->create();
@@ -291,7 +314,7 @@ class main {
 		$content = str_replace(">>CELL_MAIN<<",$index,$content);
 		return $content;
 	}
-	public function output() {
+	public function output() {		// Output Function
 		$render = $this->portal();
 		$render = str_replace("\r","",$render);
 		$content = str_replace("\n","",$render);

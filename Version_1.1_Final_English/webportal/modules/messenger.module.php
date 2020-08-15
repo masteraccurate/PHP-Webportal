@@ -19,25 +19,21 @@
 # distributed with a license or copyright      #
 # notice that explains how it can be used.     #
 ################################################
-$std_sid = "show";
-if(isset($_GET['sid']) && $_GET['sid'] != "NULL" && $_GET['sid'] != "" && $_GET['sid'] != "0" && $_GET['sid'] != "false") {
-	$sid = htmlspecialchars($_GET['sid'], ENT_QUOTES);
-} else {
-	$sid = $std_sid;
-}
+
 class messenger {
 	function title() {
 		return "Messenger";
 	}
 	function main() {
-		global $id,$sid;
 		$main = new main();
+		$id = $main->id();
+		$sid = $main->sid();
 		$content = "";
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == "1") {
 			if(($sid ==  "post") && ($_POST['name'] != "") && ($_POST['sender'] != "") && ($_POST['message'] != "")) {
 				$dbpass = base64_decode($main->config('dbpass'));
 				$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
-				$result = $db->query("SELECT user FROM user WHERE user='".$_POST['name']."'");
+				$result = $db->query("SELECT user FROM user WHERE user='".htmlspecialchars($_POST['name'], ENT_QUOTES)."'");
 				if($result->num_rows > 0) {
 					sleep(1);  // 1 second pause for spam-protection
 					$content = "";

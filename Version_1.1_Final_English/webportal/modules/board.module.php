@@ -25,10 +25,13 @@ class board {
 		return "Board";
 	}
 	function main() {
-		global $id,$cid;
 		$main = new main();
+		$id = $main->id();
+		$sid = $main->sid();
+		$cid = $main->cid();
+		$scid = $main->scid();
 		$content = "";
-		if(isset($_GET['cid']) && ($_GET['cid'] != "") && empty($_GET['sid']) && empty($_GET['scid'])) {
+		if(isset($cid) && ($cid != "") && empty($sid) && empty($scid)) {
 			$dbpass = base64_decode($main->config('dbpass'));
 			$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			if(empty($_GET['page'])) {
@@ -44,16 +47,16 @@ class board {
 				$page = $page*$ppage;
 				$limit = 0+$page;
 			}
-			$result = $db->query("SELECT * FROM board_subcat WHERE catid='".htmlspecialchars($_GET['cid'], ENT_QUOTES)."' ORDER by subcatid LIMIT ".$limit.",5");
+			$result = $db->query("SELECT * FROM board_subcat WHERE catid='".$cid."' ORDER by subcatid LIMIT ".$limit.",5");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
 			while($row = $result->fetch_array(MYSQLI_BOTH)){
-				$content_var = "Subcat-ID: ".$row['subcatid']."<br>\nForum: <a href=\"index.php?id=board&cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."&scid=".$row['subcatid']."\">".$row['title']."</a><br>\nDescription: ".$row['description']."<br>\nUsername: ".$row['name']."<br>\n Datetime: ".date('Y-m-d H:i:s', $row['datetime'])."<br>\n<br><hr>\n";
+				$content_var = "Subcat-ID: ".$row['subcatid']."<br>\nForum: <a href=\"index.php?id=board&cid=".$cid."&scid=".$row['subcatid']."\">".$row['title']."</a><br>\nBeschreibung: ".$row['description']."<br>\nBenutzername: ".$row['name']."<br>\n Uhrzeit: ".date('Y-m-d H:i:s', $row['datetime'])."<br>\n<br><hr>\n";
 				$content .= $content_var;
 			}
 			$result->close();
-			$result = $db->query("SELECT subcatid FROM board_subcat WHERE catid='".htmlspecialchars($_GET['cid'], ENT_QUOTES)."' ORDER by subcatid");
+			$result = $db->query("SELECT subcatid FROM board_subcat WHERE catid='".$cid."' ORDER by subcatid");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
@@ -67,9 +70,9 @@ class board {
 			$site_sum = $site_sum+1;
 			$i = "";
 			for($i=1;$i<=$site_sum; ++$i) {
-				$sites .= "<a href=\"index.php?id=board&amp;cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."&amp;page=".$i."\">".$i."</a>&nbsp;";
+				$sites .= "<a href=\"index.php?id=board&amp;cid=".$cid."&amp;page=".$i."\">".$i."</a>&nbsp;";
 			}
-			$link = "<a href=\"index.php?id=board&amp;sid=board_subcat_form&cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."\">Post Forum</a><br>\n<br><hr>\n";
+			$link = "<a href=\"index.php?id=board&amp;sid=board_subcat_form&cid=".$cid."\">Post Forum</a><br>\n<br><hr>\n";
 			$render = str_replace("\n","",$content);
 			$render = str_replace("\r","",$render);
 			if(isset($_SESSION['loggedin'])) {
@@ -77,7 +80,7 @@ class board {
 			}
 			$content = $render."Seite: ".$sites."<br><br><a href=\"index.php?id=board\">Back to Categories</a>";
 			$db->close();
-		} elseif(isset($_GET['cid']) && ($_GET['cid'] != "") && empty($_GET['sid']) && isset($_GET['scid'])) {
+		} elseif(isset($cid) && ($cid != "") && empty($sid) && isset($scid)) {
 			$dbpass = base64_decode($main->config('dbpass'));
 			$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			if(empty($_GET['page'])) {
@@ -93,7 +96,7 @@ class board {
 				$page = $page*$ppage;
 				$limit = 0+$page;
 			}
-			$result = $db->query("SELECT * FROM board WHERE catid='".htmlspecialchars($_GET['cid'], ENT_QUOTES)."' AND subcatid='".htmlspecialchars($_GET['scid'])."' ORDER by subcatid LIMIT ".$limit.",5");
+			$result = $db->query("SELECT * FROM board WHERE catid='".$cid."' AND subcatid='".$scid."' ORDER by subcatid LIMIT ".$limit.",5");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
@@ -102,7 +105,7 @@ class board {
 				$content .= $content_var;
 			}
 			$result->close();
-			$result = $db->query("SELECT subcatid FROM board_subcat WHERE catid='".htmlspecialchars($_GET['cid'], ENT_QUOTES)."' ORDER by subcatid");
+			$result = $db->query("SELECT subcatid FROM board_subcat WHERE catid='".$cid."' ORDER by subcatid");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
@@ -116,9 +119,9 @@ class board {
 			$site_sum = $site_sum+1;
 			$i = "";
 			for($i=1;$i<=$site_sum; ++$i) {
-				$sites .= "<a href=\"index.php?id=board&amp;scid=".htmlspecialchars($_GET['scid'], ENT_QUOTES)."&amp;page=".$i."\">".$i."</a>&nbsp;";
+				$sites .= "<a href=\"index.php?id=board&amp;scid=".$scid."&amp;page=".$i."\">".$i."</a>&nbsp;";
 			}
-			$link = "<a href=\"index.php?id=board&amp;sid=board_form&cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."&scid=".htmlspecialchars($_GET['scid'], ENT_QUOTES)."\">Post Comment</a><br>\n<br><hr>\n";
+			$link = "<a href=\"index.php?id=board&amp;sid=board_form&cid=".$cid."&scid=".$scid."\">Post Comment</a><br>\n<br><hr>\n";
 			$smiley1 = "<img src=\"images/smileys/smiley1.png\">";
 			$smiley2 = "<img src=\"images/smileys/smiley2.png\">";
 			$smiley3 = "<img src=\"images/smileys/smiley3.png\">";
@@ -131,24 +134,24 @@ class board {
 			if(isset($_SESSION['loggedin'])) {
 				$render = $link.$render;
 			}
-			$content = $render."Seite: ".$sites."<br><br><a href=\"index.php?id=board&amp;cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."\">Back to Forums</a>";
+			$content = $render."Seite: ".$sites."<br><br><a href=\"index.php?id=board&amp;cid=".$cid."\">Back to Forums</a>";
 			$db->close();
-		} elseif(isset($_GET['sid']) && isset($_GET['cid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "board_subcat_form") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && isset($cid) && ($sid != "") && ($sid == "board_subcat_form") && ($_SESSION['loggedin'] == "1")) {
 			$template = new template();
 			$content = $template->load("board_subcat_form.tpl");
-			$content = str_replace(">>CID<<",htmlspecialchars($_GET['cid'], ENT_QUOTES),$content);
+			$content = str_replace(">>CID<<",$cid,$content);
 			$content = str_replace(">>NAME<<",$_SESSION['user'],$content);
-		} elseif(isset($_GET['sid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "board_cat_form") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && ($sid != "") && ($sid == "board_cat_form") && ($_SESSION['loggedin'] == "1")) {
 			$template = new template();
 			$content = $template->load("board_cat_form.tpl");
 			$content = str_replace(">>NAME<<",$_SESSION['user'],$content);
-		} elseif(isset($_GET['sid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "board_form") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && ($sid != "") && ($sid == "board_form") && ($_SESSION['loggedin'] == "1")) {
 			$template = new template();
 			$content = $template->load("board_form.tpl");
 			$content = str_replace(">>NAME<<",$_SESSION['user'],$content);
-			$content = str_replace(">>CID<<",htmlspecialchars($_GET['cid'], ENT_QUOTES),$content);
-			$content = str_replace(">>SCID<<",htmlspecialchars($_GET['scid'], ENT_QUOTES),$content);
-		} elseif(isset($_GET['sid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "postsubcat") && ($_SESSION['loggedin'] == "1")) {
+			$content = str_replace(">>CID<<",$cid,$content);
+			$content = str_replace(">>SCID<<",$scid,$content);
+		} elseif(isset($sid) && ($sid != "") && ($sid == "postsubcat") && ($_SESSION['loggedin'] == "1")) {
 			sleep(1);  // 1 second pause for spam-protection
 			$content = "";
 			$render = "";
@@ -162,13 +165,13 @@ class board {
 			$statement = "INSERT INTO board_subcat (subcatid,title,description,catid,name,datetime) VALUES(NULL,'$post_title','$post_description','$post_catid','$post_name','$datetime')";
 			$result = $db->query($statement);
 			if(isset($result)) {
-				$link = "<a href=\"index.php?id=board&amp;cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."\">Go to Board-Category</a><br>\n<br>\n";
+				$link = "<a href=\"index.php?id=board&amp;cid=".$cid."\">Go to Board-Category</a><br>\n<br>\n";
 				$content = "Forum posted in Database! ".$link;
 			} else {
 				$content = "ERROR POSTING FORUM!\n";
 			}
 			$db->close();
-		} elseif(isset($_GET['sid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "post") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && ($sid != "") && ($sid == "post") && ($_SESSION['loggedin'] == "1")) {
 			sleep(1);  // 1 second pause for spam-protection
 			$content = "";
 			$render = "";
@@ -183,13 +186,13 @@ class board {
 			$statement = "INSERT INTO board (id,title,comment,catid,subcatid,name,datetime) VALUES(NULL,'$post_title','$post_comment','$post_catid','$post_subcatid','$post_name','$datetime')";
 			$result = $db->query($statement);
 			if(isset($result)) {
-				$link = "<a href=\"index.php?id=board&amp;cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."&amp;scid=".htmlspecialchars($_GET['scid'], ENT_QUOTES)."\">Back to Forum</a><br>\n<br>\n";
+				$link = "<a href=\"index.php?id=board&amp;cid=".$cid."&amp;scid=".$scid."\">Back to Forum</a><br>\n<br>\n";
 				$content = "Forum-Comment posted in Database! ".$link;
 			} else {
 				$content = "ERROR FORUM POST!\n";
 			}
 			$db->close();
-		} elseif(isset($_GET['sid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "postcat") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && ($sid != "") && ($sid == "postcat") && ($_SESSION['loggedin'] == "1")) {
 			sleep(1);  // 1 second pause for spam-protection
 			$content = "";
 			$dbpass = base64_decode($main->config('dbpass'));

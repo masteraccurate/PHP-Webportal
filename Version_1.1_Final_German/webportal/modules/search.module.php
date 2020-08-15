@@ -25,7 +25,6 @@ class search {
 		return "Suchen";
 	}
 	function main() {
-		global $id,$sid;
 		$main = new main();
 		$gbook = "";
 		$blog = "";

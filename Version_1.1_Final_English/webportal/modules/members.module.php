@@ -19,6 +19,7 @@
 # distributed with a license or copyright      #
 # notice that explains how it can be used.     #
 ################################################
+
 class members {
 	function title() {
 		return "Userlist";

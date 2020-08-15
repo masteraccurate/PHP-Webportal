@@ -19,15 +19,18 @@
 # distributed with a license or copyright      #
 # notice that explains how it can be used.     #
 ################################################
+
 class images {
 	function title() {
 		return "Bilder";
 	}
 	function main() {
-		global $id,$cid;
 		$main = new main();
+		$id = $main->id();
+		$sid = $main->sid();
+		$cid = $main->cid();
 		$content = "";
-		if(isset($_GET['cid']) && ($_GET['cid'] != "") && empty($_GET['sid'])) {
+		if(isset($cid) && ($cid != "") && empty($sid)) {
 			$dbpass = base64_decode($main->config('dbpass'));
 			$db = new Database($main->config('dbhost'), $main->config('dbuser'), $dbpass, $main->config('dbname'));
 			if(empty($_GET['page'])) {
@@ -43,7 +46,7 @@ class images {
 				$page = $page*$ppage;
 				$limit = 0+$page;
 			}
-			$result = $db->query("SELECT * FROM images WHERE catid='".htmlspecialchars($_GET['cid'], ENT_QUOTES)."' ORDER by id LIMIT ".$limit.",5");
+			$result = $db->query("SELECT * FROM images WHERE catid='".$cid."' ORDER by id LIMIT ".$limit.",5");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
@@ -52,7 +55,7 @@ class images {
 				$content .= $content_var;
 			}
 			$result->close();
-			$result = $db->query("SELECT id FROM images WHERE catid='".htmlspecialchars($_GET['cid'], ENT_QUOTES)."' ORDER by id");
+			$result = $db->query("SELECT id FROM images WHERE catid='".$cid."' ORDER by id");
 			if(!$result){
 				$content = $main->error("3","ERROR CONNECTING");
 			}
@@ -66,9 +69,9 @@ class images {
 			$site_sum = $site_sum+1;
 			$i = "";
 			for($i=1;$i<=$site_sum; ++$i) {
-				$sites .= "<a href=\"index.php?id=images&amp;cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."&amp;page=".$i."\">".$i."</a>&nbsp;";
+				$sites .= "<a href=\"index.php?id=images&amp;cid=".$cid."&amp;page=".$i."\">".$i."</a>&nbsp;";
 			}
-			$link = "<a href=\"index.php?id=images&amp;sid=images_form&cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."\">Post Image</a><br>\n<br><hr>\n";
+			$link = "<a href=\"index.php?id=images&amp;sid=images_form&cid=".$cid."\">Post Image</a><br>\n<br><hr>\n";
 			$render = str_replace("\n","",$content);
 			$render = str_replace("\r","",$render);
 			if(isset($_SESSION['loggedin'])) {
@@ -76,16 +79,16 @@ class images {
 			}
 			$content = $render."Seite: ".$sites."<br><br><a href=\"index.php?id=images\">Back to Categories</a>";
 			$db->close();
-		} elseif(isset($_GET['sid']) && isset($_GET['cid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "images_form") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && isset($cid) && ($sid != "") && ($sid == "images_form") && ($_SESSION['loggedin'] == "1")) {
 			$template = new template();
 			$content = $template->load("images_form.tpl");
-			$content = str_replace(">>CID<<",htmlspecialchars($_GET['cid'], ENT_QUOTES),$content);
+			$content = str_replace(">>CID<<",$cid,$content);
 			$content = str_replace(">>NAME<<",$_SESSION['user'],$content);
-		} elseif(isset($_GET['sid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "images_cat_form") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && ($sid != "") && ($sid == "images_cat_form") && ($_SESSION['loggedin'] == "1")) {
 			$template = new template();
 			$content = $template->load("images_cat_form.tpl");
 			$content = str_replace(">>NAME<<",$_SESSION['user'],$content);
-		} elseif(isset($_GET['sid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "post") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && ($sid != "") && ($sid == "post") && ($_SESSION['loggedin'] == "1")) {
 			sleep(1);  // 1 second pause for spam-protection
 			$content = "";
 			$render = "";
@@ -100,13 +103,13 @@ class images {
 			$statement = "INSERT INTO images (id,title,url,description,catid,name,datetime) VALUES(NULL,'$post_title','$post_url','$post_description','$post_catid','$post_name','$datetime')";
 			$result = $db->query($statement);
 			if(isset($result)) {
-				$link = "<a href=\"index.php?id=images&amp;cid=".htmlspecialchars($_GET['cid'], ENT_QUOTES)."\">Go to Image-Category</a><br>\n<br>\n";
+				$link = "<a href=\"index.php?id=images&amp;cid=".$cid."\">Go to Image-Category</a><br>\n<br>\n";
 				$content = "Image posted in Database! ".$link;
 			} else {
 				$content = "ERROR POSTING IMAGE!\n";
 			}
 			$db->close();
-		} elseif(isset($_GET['sid']) && ($_GET['sid'] != "") && ($_GET['sid'] == "postcat") && ($_SESSION['loggedin'] == "1")) {
+		} elseif(isset($sid) && ($sid != "") && ($sid == "postcat") && ($_SESSION['loggedin'] == "1")) {
 			sleep(1);  // 1 second pause for spam-protection
 			$content = "";
 			$render = "";
