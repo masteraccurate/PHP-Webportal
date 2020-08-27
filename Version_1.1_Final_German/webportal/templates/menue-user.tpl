@@ -47,14 +47,4 @@
  <br>Benutzer:<br>>>USER<<<br><br><A HREF="index.php?id=login&amp;action=logout">Ausloggen</A><BR><BR><A HREF="index.php?id=profile">Profil</A><BR><A HREF="index.php?id=members">Benutzerliste</A><BR><A HREF="index.php?id=messenger">Messenger</A><BR><A HREF="index.php?id=chat">Chat</A><br><br>
 </div>
 
-<!--
-<table border="0" width="160" cellspacing="0" cellpadding="0" bgcolor="#000000" class="table_show2">
- <tr>
-  <td bgcolor="#000000" style="color:#ffffff" align="center" id="td_pad2">User Men&uuml;</td>
- </tr>
- <tr class="tr_hide2">
-  <td bgcolor="#ffffff" style="color:#000000" align="center" id="td_pad2"><br>Benutzer:<br>>>USER<<<br><br><A HREF="index.php?id=login&amp;action=logout">Ausloggen</A><BR><BR><A HREF="index.php?id=profile">Profil</A><BR><A HREF="index.php?id=members">Benutzerliste</A><BR><A HREF="index.php?id=messenger">Messenger</A><BR><A HREF="index.php?id=chat">Chat</A><br><br></td>
- </tr>
-</table>
--->
 <!--// Right User Menue - END //-->

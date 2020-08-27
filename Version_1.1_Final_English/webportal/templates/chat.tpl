@@ -13,4 +13,4 @@
   </td>
  </tr>
 </table>
-<script type="text/javascript" src="templates/portal.js"></script>
+<script type="text/javascript" src="templates/chat.js"></script>

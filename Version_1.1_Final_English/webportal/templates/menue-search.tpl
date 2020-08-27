@@ -46,15 +46,4 @@
 <FORM ACTION="index.php" METHOD="GET"><br><INPUT TYPE="HIDDEN" NAME="id" VALUE="search"><INPUT TYPE="TEXT" NAME="search" SIZE="10" MAXLENGTH="256" PLACEHOLDER="Search..."><br><br><INPUT TYPE="Submit" VALUE="Search"><br><br></FORM>
 </div>
 
-<!--
-<table border="0" width="160" cellspacing="0" cellpadding="0" bgcolor="#000000" class="table_show3">
- <tr>
-  <td bgcolor="#000000" style="color:#ffffff" align="center" id="td_pad3">Such Men&uuml;</td>
- </tr>
- <tr class="tr_hide3">
-  <td bgcolor="#ffffff" style="color:#000000" align="center" id="td_pad3"><FORM ACTION="index.php?id=search" METHOD="GET"><br><INPUT TYPE="hidden" NAME="id" VALUE="search"><INPUT TYPE="TEXT" NAME="search" SIZE="10" MAXLENGTH="256" PLACEHOLDER="Suchen..."><br><br><INPUT TYPE="Submit" VALUE="Suchen"><br><br></FORM></td>
- </tr>
-</table>
--->
-
 <!--// Left Search Menue - END //-->

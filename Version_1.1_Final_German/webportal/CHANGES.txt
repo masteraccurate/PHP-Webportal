@@ -33,5 +33,6 @@ Version 1.1 Final RC2
 - Website Layout geändert (animiertes menü nur an der linken seite)
 - Animiertes Menü hat besseren look und ist schneller
 - Sanitizer Funktionen für Identifier integriert und in Module implementiert
+- Änderungen in HTML/CSS Templates
 -
 - Bugs gefixt

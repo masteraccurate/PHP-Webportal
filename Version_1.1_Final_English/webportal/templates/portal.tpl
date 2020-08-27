@@ -45,33 +45,37 @@ function symbols(a)
 </HEAD>
 <BODY BGCOLOR="#FFFFFF">
 <br>
-<DIV ALIGN="CENTER">
-<TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<CENTER>
+<TABLE class="outertable">
  <TR>
+
   <TD ALIGN="CENTER" VALIGN="MIDDLE">
-   <TABLE BORDER="0" WIDTH="1000" CELLSPACING="1" CELLPADDING="0" BGCOLOR="#000000">
+   <TABLE class="innertable">
     <TR>
-     <TD BGCOLOR="#FFFFFF" ALIGN="CENTER" VALIGN="MIDDLE" CLASS="edges">
+     <TD CLASS="edges" align="center">
 <br>
-      <TABLE BORDER="0" WIDTH="930" CELLSPACING="1" CELLPADDING="0" BGCOLOR="#000000">
+<center>
+      <TABLE class="splittable">
        <TR>
-        <TD BGCOLOR="#FFFFFF" WIDTH="928" HEIGHT="90" ALIGN="CENTER" VALIGN="MIDDLE">>>LOGO<<</TD>
+        <TD class="logo">>>LOGO<<</TD>
        </TR>
        <TR>
-        <TD BGCOLOR="#FFFFFF" WIDTH="928" HEIGHT="466" ALIGN="CENTER" VALIGN="TOP">
-         <TABLE BORDER="0" WIDTH="928" CELLSPACING="0" CELLPADDING="0" BGCOLOR="#FFFFFF">
+        <TD class="main">
+
+         <TABLE class="maintable">
           <TR>
-           <TD WIDTH="198" height="400" ALIGN="CENTER" VALIGN="TOP" bgcolor="#ffffff"><br>>>CELL_LEFT<<</TD>
-           <TD WIDTH="682" ALIGN="CENTER" VALIGN="TOP" bgcolor="#ffffff" rowspan="2"><br>>>CELL_MAIN<<</TD>
+           <TD class="left"><br><center>>>CELL_LEFT<<</center></TD>
+           <TD class="content"><br><center>>>CELL_MAIN<<</center></TD>
           </TR>
          </TABLE>
 <BR>
         </TD>
        </TR>
        <TR>
-        <TD WIDTH="728" HEIGHT="10" BGCOLOR="#ffffff" ALIGN="CENTER" VALIGN="MIDDLE" CLASS="copyright">>>COPYRIGHT<<</TD>
+        <TD CLASS="copyright">>>COPYRIGHT<<</TD>
        </TR>
       </TABLE>
+</center>
 <br>
      </TD>
     </TR>
@@ -80,6 +84,6 @@ function symbols(a)
   </TD>
  </TR>
 </TABLE>
-</DIV>
+</CENTER>
 </BODY>
 </HTML>

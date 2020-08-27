@@ -50,20 +50,4 @@
  <A HREF="index.php?id=login&amp;action=register_form">Registration</a><br><A HREF="index.php?id=login&amp;action=react_form">Activation</a><br><A HREF="index.php?id=login&amp;action=lostpass_form">Lost Password</a><br><br></FORM>
 </div>
 
-
-<!--
-<table border="0" width="160" cellspacing="0" cellpadding="0" bgcolor="#000000" class="table_show2">
- <tr>
-  <td bgcolor="#000000" style="color:#ffffff" align="center" id="td_pad2">Login Men&uuml;</td>
- </tr>
- <tr class="tr_hide2">
-  <td bgcolor="#ffffff" style="color:#000000" align="center" id="td_pad2"><FORM ACTION="index.php?id=login&amp;action=login" METHOD="POST"><BR>
-<LABEL FOR="user">Benutzer:</LABEL><br><INPUT ID="user" TYPE="TEXT" NAME="user" SIZE="10" MAXLENGTH="255"><BR>
-<LABEL FOR="pass">Passwort:</LABEL><br><INPUT ID="pass" TYPE="PASSWORD" NAME="pass" SIZE="10" MAXLENGTH="255"><BR><br>
-<INPUT TYPE="Submit" NAME="Submit" VALUE="Login">&nbsp;&nbsp;<INPUT TYPE="RESET" NAME="Reset" VALUE="Reset"><BR><br>
-<A HREF="index.php?id=login&amp;action=register_form">Registrieren</a><br><A HREF="index.php?id=login&amp;action=react_form">Aktivieren</a><br><A HREF="index.php?id=login&amp;action=lostpass_form">Passwort vergessen</a><br><br></FORM></td>
- </tr>
-</table>
--->
-
 <!--// Login Menue - END //-->

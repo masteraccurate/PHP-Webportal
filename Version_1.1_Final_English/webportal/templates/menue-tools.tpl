@@ -46,14 +46,4 @@
 <br><A HREF="index.php?id=namegenerator">Namegenerator</A><br><A HREF="index.php?id=passgen">Passwordgenerator</A><BR><A HREF="index.php?id=client">Client Info</A><br><br>Visitors:<br><img src="counter.php" alt="counter"><br><br>
 </div>
 
-<!--
-<table border="0" width="160" cellspacing="0" cellpadding="0" bgcolor="#000000" class="table_show4">
- <tr>
-  <td bgcolor="#000000" style="color:#ffffff" align="center" id="td_pad4">Tools Men&uuml;</td>
- </tr>
- <tr class="tr_hide4">
-  <td bgcolor="#ffffff" style="color:#000000" align="center" id="td_pad4"><br><A HREF="index.php?id=namegenerator">Namegenerator</A><br><A HREF="index.php?id=passgen">Passwortgenerator</A><BR><A HREF="index.php?id=client">Client Info</A><br><br>Besucher:<br><img src="counter.php" alt="counter"><br><br></td>
- </tr>
-</table>
--->
 <!--// Right Menue 1 - END //-->
