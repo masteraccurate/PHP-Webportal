@@ -2,15 +2,15 @@
 <HTML lang="de">
 <HEAD>
 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> -->
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15"> -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <TITLE>>>PORTALTITLE<<</TITLE>
 
 <LINK REL="stylesheet" TYPE="text/css" HREF="templates/portal.css"> 
 <SCRIPT SRC="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="templates/favicon.ico">
 
-<script language="javascript" type="text/javascript">
+<script>
 function smiley(a)
 {
  if(a==1)
@@ -43,18 +43,16 @@ function symbols(a)
 </script>
 
 </HEAD>
-<BODY BGCOLOR="#FFFFFF">
-<br>
-<CENTER>
+<BODY>
+
 <TABLE class="outertable">
  <TR>
+  <TD>
 
-  <TD ALIGN="CENTER" VALIGN="MIDDLE">
    <TABLE class="innertable">
     <TR>
-     <TD CLASS="edges" align="center">
-<br>
-<center>
+     <TD CLASS="edges">
+
       <TABLE class="splittable">
        <TR>
         <TD class="logo">>>LOGO<<</TD>
@@ -64,26 +62,24 @@ function symbols(a)
 
          <TABLE class="maintable">
           <TR>
-           <TD class="left"><center>>>CELL_LEFT<<</center></TD>
-           <TD class="content"><center>>>CELL_MAIN<<</center></TD>
+           <TD class="left">>>CELL_LEFT<<</TD>
+           <TD class="content">>>CELL_MAIN<<</TD>
           </TR>
          </TABLE>
-<BR>
+
         </TD>
        </TR>
        <TR>
         <TD CLASS="copyright">>>COPYRIGHT<<</TD>
        </TR>
       </TABLE>
-</center>
-<br>
+
      </TD>
     </TR>
    </TABLE>
-<br>
+
   </TD>
  </TR>
 </TABLE>
-</CENTER>
 </BODY>
 </HTML>
