@@ -39,7 +39,7 @@ table.splittable {
 	border-spacing: 1px;
 	padding: 0;
 	background: #000000;
-	vertical-align: middle;
+	vertical-align: top;
 }
 table.maintable {
 	border: 0;
@@ -93,8 +93,8 @@ TD.main {
     background: #ffffff;
     text-align: center;
     align-items: center;
-    vertical-align: middle;
-    padding: 0;
+    vertical-align: top;
+    padding-top: 10px;
 }
 TD.left {
     width: 198px;
@@ -129,9 +129,9 @@ TD.menue {
 	color:#ffffff;
 	background: #000000;
 	font-size:10pt;
-    text-align: center;
-    align-items: center;
-    vertical-align: middle;
+	text-align: center;
+	align-items: center;
+	vertical-align: middle;
 }
 TD.news {
 	width: 688px;
@@ -139,9 +139,11 @@ TD.news {
 	color:#000000;
 	background: #ffffff;
 	font-size:10pt;
-    text-align: center;
-    align-items: center;
-    vertical-align: middle;
+	text-align: center;
+	align-items: center;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 TD.login {
 	font-family:Verdana;
@@ -157,9 +159,9 @@ TD.copyright {
 	color:#000000;
 	background:#FFFFFF;
 	font-size:8pt;
-    text-align: center;
-    align-items: center;
-    vertical-align: middle;
+	text-align: center;
+	align-items: center;
+	vertical-align: middle;
 }
 A:link {
 	font-family:Verdana;
