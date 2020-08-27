@@ -62,7 +62,7 @@ function symbols(a)
 
          <TABLE class="maintable">
           <TR>
-           <TD class="left">>>CELL_LEFT<<</TD>
+           <TD class="left"><center>>>CELL_LEFT<<</center></TD>
            <TD class="content">>>CELL_MAIN<<</TD>
           </TR>
          </TABLE>
