@@ -1,28 +1,5 @@
 <!--// Login Menue - BEGIN //-->
 
-<style>
-.tr_show2 {
-	border: 1px solid black;
-	border-collapse: seperate;
-	box-shadow: 10px 10px 15px silver;
-	font-size: 1em;
-	background-color: black;
-	color: white;
-	width: 160px;
-}
-.tr_hide2 {
-	border-collapse: seperate;
-	box-shadow: 10px 10px 15px silver;
-	font-size: 1em;
-	border: 1px solid black;
-	background-color: white;
-	width: 160px;
-	color: black;
-}
-#td_pad2 {
-	padding:10px;
-}
-</style>
 <script>
 	$(document).ready(function () {
 		$(".tr_hide2").hide();
@@ -49,5 +26,6 @@
  <INPUT TYPE="Submit" NAME="Submit" VALUE="Login">&nbsp;&nbsp;<INPUT TYPE="RESET" NAME="Reset" VALUE="Reset"><BR><br>
  <A HREF="index.php?id=login&amp;action=register_form">Registrieren</a><br><A HREF="index.php?id=login&amp;action=react_form">Aktivieren</a><br><A HREF="index.php?id=login&amp;action=lostpass_form">Passwort vergessen</a><br><br></FORM>
 </div>
+
 
 <!--// Login Menue - END //-->

@@ -1,28 +1,5 @@
 <!--// Left Search Menue - BEGIN //-->
 
-<style>
-.tr_show3 {
-	border: 1px solid black;
-	border-collapse: seperate;
-	box-shadow: 10px 10px 15px silver;
-	font-size: 1em;
-	background-color: black;
-	color: white;
-	width: 160px;
-}
-.tr_hide3 {
-	border-collapse: seperate;
-	box-shadow: 10px 10px 15px silver;
-	font-size: 1em;
-	border: 1px solid black;
-	background-color: white;
-	width: 160px;
-	color: black;
-}
-#td_pad3 {
-	padding:10px;
-}
-</style>
 <script>
 	$(document).ready(function () {
 		$(".tr_hide3").hide();
