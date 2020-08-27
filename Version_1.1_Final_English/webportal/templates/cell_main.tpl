@@ -4,7 +4,7 @@
   <TD CLASS="menue"><center>>>CELL_TITLE<<</center></TD>
  </TR>
  <TR>
-  <TD CLASS="news"><BR>>>CELL_INDEX<<<BR><BR></TD>
+  <TD CLASS="news"><BR><center>>>CELL_INDEX<<</center><BR><BR></TD>
  </TR>
 </TABLE>
 <!--// CELL MAIN 1 - END //-->
