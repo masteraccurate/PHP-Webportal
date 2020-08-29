@@ -34,6 +34,5 @@ Version 1.1 Final RC2
 - Animated Menu changed to new look and faster movement
 - Sanitizer functions for identifiers integrated in kernel.php and implemented in modules
 - Changes in HTML/CSS Templates
--
 - Bugs Fixed 
-- Development Status (this version is still developed)
+- Finalized Status (this version is finalized)
