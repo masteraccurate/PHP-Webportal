@@ -59,3 +59,5 @@ the author source of this software.
 The use for teaching purposes is expressly permitted and also
 allowed at your own risk and responsibility.
 The programmer does not offer guarantee or warranty claims for this software.
+
+Thanks to Detrimentalist and Flazer for giving me good tips!
