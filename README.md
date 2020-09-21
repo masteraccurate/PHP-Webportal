@@ -32,8 +32,8 @@ Upload files to your Webserver and follow this instructions:
 
 - +.) You can use blank.module.php to develop your own modules
 
-You can visit an example of this webportal at https://webportal.de.cool
-To delete or edit postings you need to use phpMyAdmin or similar
+- You can visit an example of this webportal at https://webportal.de.cool
+- To delete or edit postings you need to use phpMyAdmin or similar
 Have fun trying!
 
 #Copyright:
