@@ -52,7 +52,7 @@ Every user contributes by downloading this software
 your own risk and responsibility for
 everything that happens to the software and also in the case
 that third parties are harmed.
-It is expressly permitted to use this software for private purposes
+It is expressly permitted to use this software for private purposes. 
 Use, copy and reproduce purposes
 as long as this is not done commercially and with mention
 the author source of this software.
